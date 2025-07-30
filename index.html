@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Biblical Wisdom</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="header-content">
+          <h1><i class="fas fa-cross"></i> Biblical Wisdom</h1>
+          <p>Find spiritual guidance and divine inspiration <i class="fas fa-pray"></i></p>
+        </div>
+        <button id="theme-toggle" class="theme-toggle" title="Toggle dark mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </header>
+
+      <main class="main-content">
+        <div class="quote-container">
+          <div class="quote-card">
+            <div class="quote-icon">
+              <i class="fas fa-quote-left"></i>
+            </div>
+            <blockquote id="quote-text">
+              Click "Old Testament" or type your request to start your journey of spiritual guidance.
+            </blockquote>
+            <cite id="quote-author">- Your Daily Biblical Wisdom</cite>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="input-section">
+            <input
+              type="text"
+              id="user-input"
+              placeholder="Type 'strengthen me' or 'guide me'..."
+              autocomplete="off"
+            />
+            <button id="submit-btn" class="primary-btn">
+              <i class="fas fa-paper-plane"></i> Send
+            </button>
+          </div>
+
+          <div class="quick-actions">
+            <button class="action-btn" data-action="motivate">
+              <i class="fas fa-scroll"></i> Old Testament
+            </button>
+            <button class="action-btn" data-action="inspire">
+              <i class="fas fa-book-open"></i> New Testament
+            </button>
+            <button class="action-btn" data-action="strength">
+              <i class="fas fa-music"></i> Psalms
+            </button>
+            <button class="action-btn" data-action="focus">
+              <i class="fas fa-dice"></i> Random
+            </button>
+            <button
+              class="action-btn motivational-btn"
+              data-action="motivational"
+            >
+              <i class="fas fa-fire"></i> Motivational Quotes
+            </button>
+          </div>
+
+          <div class="navigation">
+            <button id="prev-btn" class="nav-btn" disabled>
+              <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <button id="next-btn" class="nav-btn">
+              Next <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat-item">
+            <span class="stat-number" id="quote-count">0</span>
+            <span class="stat-label">Quotes Viewed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" id="current-index">0</span>
+            <span class="stat-label">Current Quote</span>
+          </div>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <p>
+          Made with <i class="fas fa-heart"></i> by
+          <span>Kirubel</span>
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
