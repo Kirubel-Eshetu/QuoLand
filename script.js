@@ -1,12 +1,4 @@
-const biblicalQuotes = [
-  {
-    text: "I an do all things through Christ who strengthens me.",
-    reference: "Philippians 4:13",
-  },
-  {
-    text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",
-    reference: "Jeremiah 29:11",
-  },
+const oldTestament = [
   {
     text: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
     reference: "Joshua 1:9",
@@ -16,76 +8,85 @@ const biblicalQuotes = [
     reference: "Proverbs 3:5-6",
   },
   {
-    text: "The Lord is my strength and my shield; my heart trusts in him, and he helps me.",
-    reference: "Psalm 28:7",
-  },
-  {
     text: "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
     reference: "Isaiah 40:31",
   },
+  {
+    text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",
+    reference: "Jeremiah 29:11",
+  },
+];
+
+const newTestament = [
   {
     text: "Come to me, all you who are weary and burdened, and I will give you rest.",
     reference: "Matthew 11:28",
   },
   {
+    text: "For nothing is impossible with God.",
+    reference: "Luke 1:37",
+  },
+  {
     text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
     reference: "John 3:16",
-  },
-  {
-    text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
-    reference: "Romans 8:28",
-  },
-  {
-    text: "The Lord is my shepherd, I lack nothing.",
-    reference: "Psalm 23:1",
-  },
-  {
-    text: "Do not be anxious about anything, but present your requests to God with thanksgiving.",
-    reference: "Philippians 4:6",
-  },
-  {
-    text: "Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken.",
-    reference: "Psalm 55:22",
-  },
-  {
-    text: "Be joyful in hope, patient in affliction, faithful in prayer.",
-    reference: "Romans 12:12",
-  },
-  {
-    text: "The Lord gives strength to his people; the Lord blesses his people with peace.",
-    reference: "Psalm 29:11",
-  },
-  {
-    text: "In all your ways acknowledge him, and he will make straight your paths.",
-    reference: "Proverbs 3:6",
-  },
-  {
+  }, {
     text: "Let not your hearts be troubled, neither let them be afraid.",
     reference: "John 14:27",
-  },
-  {
-    text: "The Lord is near to all who call on him in truth.",
-    reference: "Psalm 145:18",
-  },
-  {
-    text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness.",
-    reference: "Galatians 5:22",
   },
   {
     text: "I have told you these things, so that in me you may have peace. In this world you will have trouble. But take heart! I have overcome the world.",
     reference: "John 16:33",
   },
   {
-    text: "The Lord is my light and my salvation—whom shall I fear?",
-    reference: "Psalm 27:1",
+    text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
+    reference: "Romans 8:28",
+  },
+  {
+    text: "Be joyful in hope, patient in affliction, faithful in prayer.",
+    reference: "Romans 12:12",
   },
   {
     text: "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!",
     reference: "2 Corinthians 5:17",
   },
   {
-    text: "For nothing is impossible with God.",
-    reference: "Luke 1:37",
+    text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness.",
+    reference: "Galatians 5:22",
+  },
+  {
+    text: "Do not be anxious about anything, but present your requests to God with thanksgiving.",
+    reference: "Philippians 4:6",
+  },
+  {
+    text: "I an do all things through Christ who strengthens me.",
+    reference: "Philippians 4:13",
+  },
+];
+
+const psalms = [
+  {
+    text: "The Lord is my shepherd, I lack nothing.",
+    reference: "Psalm 23:1",
+  },
+  {
+    text: "The Lord is my light and my salvation—whom shall I fear?",
+    reference: "Psalm 27:1",
+  },
+  {
+    text: "The Lord is my strength and my shield; my heart trusts in him, and he helps me.",
+    reference: "Psalm 28:7",
+  },
+  {
+    text: "The Lord gives strength to his people; the Lord blesses his people with peace.",
+    reference: "Psalm 29:11",
+  },
+  {
+    text: "Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken.",
+    reference: "Psalm 55:22",
+  },
+  {
+    text: "The Lord is near to all who call on him in truth.",
+    reference: "Psalm 145:18",
   },
 ];
 
@@ -172,7 +173,7 @@ const motivationalSpeeches = [
   },
   {
     text: "It might be too late to make something, but is it too late to try?",
-    author: "Kirubel",
+    author: "Kirubel Eshetu",
   },
 ];
 
@@ -250,7 +251,7 @@ const themeManager = {
   set(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    
+
     const icon = elements.themeToggle.querySelector("i");
     const isDark = theme === "dark";
     icon.className = isDark ? "fas fa-sun" : "fas fa-moon";
@@ -261,8 +262,7 @@ const themeManager = {
     const currentTheme = document.documentElement.getAttribute("data-theme") || "light";
     const newTheme = currentTheme === "light" ? "dark" : "light";
     this.set(newTheme);
-    
-    // Animation effect
+
     elements.themeToggle.style.transform = "scale(0.9)";
     setTimeout(() => {
       elements.themeToggle.style.transform = "scale(1)";
@@ -273,56 +273,52 @@ const themeManager = {
 const musicManager = {
   audio: null,
   isPlaying: false,
-  currentMode: 'bible', // 'bible' or 'motivational'
-  
+  currentMode: 'bible', 
+
   init() {
     this.createAudioElements();
     this.loadSettings();
     this.updateMusicButton();
   },
-  
+
   createAudioElements() {
     this.bibleAudio = new Audio();
     this.bibleAudio.loop = true;
     this.bibleAudio.volume = 0.3;
-    
+
     this.motivationalAudio = new Audio();
     this.motivationalAudio.loop = true;
     this.motivationalAudio.volume = 0.3;
-    
-    // Set audio sources (you can replace these with actual music files)
-    // For Bible mode: Use calming, spiritual music (e.g., Gregorian chants, peaceful hymns)
-    // For Motivational mode: Use uplifting, energetic music (e.g., inspiring instrumentals)
-    this.bibleAudio.src = 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'; // Replace with actual Bible mode music
-    this.motivationalAudio.src = 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'; // Replace with actual Motivational mode music
-    
+
+    this.bibleAudio.src = './Music/Track 11 ከሙሴ የሚልቅ.mp3'; 
+    this.motivationalAudio.src = './Music/David_Goggins.mp3'; 
+
     this.audio = this.bibleAudio;
   },
-  
+
   loadSettings() {
     const savedMusicState = localStorage.getItem("musicEnabled");
     if (savedMusicState === "true") {
       this.isPlaying = true;
     }
   },
-  
+
   toggle() {
     if (this.isPlaying) {
       this.stop();
     } else {
       this.play();
     }
-    
-    // Animation effect
+
     elements.musicToggle.style.transform = "scale(0.9)";
     setTimeout(() => {
       elements.musicToggle.style.transform = "scale(1)";
     }, 150);
   },
-  
+
   play() {
     if (!this.audio) return;
-    
+
     this.audio.play().then(() => {
       this.isPlaying = true;
       this.updateMusicButton();
@@ -332,38 +328,38 @@ const musicManager = {
       interactiveFeatures.showToast("Music playback not available");
     });
   },
-  
+
   stop() {
     if (!this.audio) return;
-    
+
     this.audio.pause();
     this.audio.currentTime = 0;
     this.isPlaying = false;
     this.updateMusicButton();
     localStorage.setItem("musicEnabled", "false");
   },
-  
+
   switchMode(mode) {
     if (this.currentMode === mode) return;
-    
+
     const wasPlaying = this.isPlaying;
-    
+
     if (this.isPlaying) {
       this.stop();
     }
-    
+
     this.currentMode = mode;
     this.audio = mode === 'bible' ? this.bibleAudio : this.motivationalAudio;
-    
+
     if (wasPlaying) {
       this.play();
     }
   },
-  
+
   updateMusicButton() {
     const icon = elements.musicToggle.querySelector("i");
     const isPlaying = this.isPlaying;
-    
+
     if (isPlaying) {
       elements.musicToggle.classList.add("playing");
       icon.className = "fas fa-volume-mute";
@@ -378,25 +374,25 @@ const musicManager = {
 
 const quoteManager = {
   showQuote(index, isBiblical = false) {
-    const quotes = isBiblical ? biblicalQuotes : motivationalSpeeches;
+    const quotes = isBiblical ? oldTestament : motivationalSpeeches;
     const quote = quotes[index];
-    
+
     if (!quote) return;
-    
+
     elements.quoteCard.classList.add("fade-out");
-    
+
     setTimeout(() => {
       elements.quoteText.textContent = quote.text;
       elements.quoteAuthor.textContent = isBiblical ? `- ${quote.reference}` : `- ${quote.author}`;
-      
+
       elements.quoteCard.classList.remove("fade-out");
       elements.quoteCard.classList.add("fade-in");
-      
+
       setTimeout(() => {
         elements.quoteCard.classList.remove("fade-in");
       }, 300);
     }, 150);
-    
+
     if (isBiblical) {
       state.currentBiblicalIndex = index;
       state.viewedBiblicalQuotes.add(index);
@@ -406,7 +402,7 @@ const quoteManager = {
       state.viewedQuotes.add(index);
       state.quoteHistory.push(index);
     }
-    
+
     this.updateStats();
     this.updateNavigationButtons();
   },
@@ -428,7 +424,7 @@ const quoteManager = {
   showPreviousQuote() {
     const isBiblical = state.isBibleMode;
     const history = isBiblical ? state.biblicalQuoteHistory : state.quoteHistory;
-    
+
     if (history.length > 1) {
       history.pop();
       const previousIndex = history[history.length - 1];
@@ -457,7 +453,7 @@ const quoteManager = {
 const uiManager = {
   updateActionButtons() {
     const config = state.isBibleMode ? buttonConfigs.bible : buttonConfigs.motivational;
-    
+
     elements.actionBtns.forEach(btn => {
       const action = btn.dataset.action;
       const buttonConfig = config[action];
@@ -471,7 +467,7 @@ const uiManager = {
     const config = state.isBibleMode ? headerConfigs.bible : headerConfigs.motivational;
     const headerTitle = document.querySelector(".header h1");
     const headerSubtitle = document.querySelector(".header p");
-    
+
     headerTitle.innerHTML = config.title;
     headerSubtitle.textContent = config.subtitle;
     elements.userInput.placeholder = config.placeholder;
@@ -479,9 +475,9 @@ const uiManager = {
 
   toggleBibleMode() {
     state.isBibleMode = !state.isBibleMode;
-    
+
     elements.quoteCard.classList.add("flipping");
-    
+
     setTimeout(() => {
       if (state.isBibleMode) {
         elements.quoteCard.classList.add("bible-mode");
@@ -492,13 +488,13 @@ const uiManager = {
         quoteManager.showRandomQuote(false);
         musicManager.switchMode('motivational');
       }
-      
+
       this.updateActionButtons();
       this.updateHeader();
-      
+
       elements.quoteCard.classList.remove("flipping");
       elements.quoteCard.classList.add("flipped");
-      
+
       setTimeout(() => {
         elements.quoteCard.classList.remove("flipped");
       }, 300);
@@ -519,7 +515,7 @@ const inputProcessor = {
 
   handleMatchedPattern(pattern) {
     const isBiblical = state.isBibleMode;
-    
+
     switch (pattern) {
       case "motivate":
       case "inspire":
@@ -542,10 +538,10 @@ const inputProcessor = {
   handleUserInput() {
     const input = elements.userInput.value.trim().toLowerCase();
     if (!input) return;
-    
+
     elements.userInput.value = "";
     const matchedPattern = this.findMatchingPattern(input);
-    
+
     if (matchedPattern) {
       this.handleMatchedPattern(matchedPattern);
     } else {
@@ -573,7 +569,7 @@ const interactiveFeatures = {
 
     document.addEventListener("keydown", (e) => {
       const key = e.key.toLowerCase();
-      
+
       switch (key) {
         case "arrowright":
         case " ":
@@ -634,7 +630,7 @@ const interactiveFeatures = {
 const eventListeners = {
   init() {
     elements.submitBtn.addEventListener("click", () => inputProcessor.handleUserInput());
-    
+
     elements.userInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         inputProcessor.handleUserInput();
@@ -657,7 +653,6 @@ const eventListeners = {
   }
 };
 
-// Initialize application
 function init() {
   themeManager.init();
   musicManager.init();
@@ -671,7 +666,6 @@ function init() {
   uiManager.updateActionButtons();
 }
 
-// Add CSS animations
 const style = document.createElement("style");
 style.textContent = `
   @keyframes slideIn {
@@ -697,11 +691,9 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Initialize when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
   init();
-  
-  // Apply special styling for motivational button in bible mode
+
   setTimeout(() => {
     const motivationalBtn = document.querySelector('.bible-mode .action-btn[data-action="motivational"]');
     if (motivationalBtn) {
@@ -712,7 +704,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }, 100);
 });
 
-// Export for external use
 window.MotivationalApp = {
   showQuote: (index) => quoteManager.showQuote(index, state.isBibleMode),
   showNextQuote: () => quoteManager.showNextQuote(),
