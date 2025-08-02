@@ -9,13 +9,6 @@ A beautiful, interactive web application that provides both biblical wisdom and 
 - **Motivational Mode**: Get inspired with motivational quotes from famous personalities
 - **Seamless Switching**: Toggle between modes with smooth animations
 
-### 🚀 **Interactive User Input**
-Users can type natural language requests to get content:
-- `"motivate me"`, `"give me strength"`, `"inspire me"`
-- `"next quote"`, `"previous"`, `"random"`
-- `"guide me"`, `"strengthen me"` (Biblical mode)
-- And many more variations!
-
 ### 🎨 **Modern Design**
 - **Responsive Design**: Works perfectly on all devices
 - **Dark/Light Theme**: Toggle between themes with smooth transitions
