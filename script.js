@@ -1,41 +1,285 @@
 const oldTestament = [
   {
+    text: "Then the LORD God formed a man from the dust of the ground and breathed into his nostrils the breath of life, and the man became a living being.",
+    reference: "Genesis 2:7",
+  },
+  {
+    text: "About Benjamin he said: 'Let the beloved of the LORD rest secure in him, for he shields him all day long, and the one the LORD loves rests between his shoulders.'",
+    reference: "Deuteronomy 33:12",
+  },
+  {
     text: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
     reference: "Joshua 1:9",
+  },
+  {
+    text: "He wraps up the waters in his clouds, yet the clouds do not burst under their weight. He covers the face of the full moon, spreading his clouds over it.",
+    reference: "Job 26:8-9"
+  },
+  {
+    text: "And he said to the human race, 'The fear of the Lord —that is wisdom, and to shun evil is understanding.'",
+    reference: "Job 28:28",
+  },
+  {
+    text: "For God does speak —now one way, now another — though no one perceives it. In a dream, in a vision of the night, when deep sleep falls on people as they slumber in their beds, he may speak in their ears and terrify them with warnings, or he may whisper softly, so that they do not know it.",
+    reference: "Job 33:14-15",
+  },
+  {
+    text: "God is mighty, but despises no one; he is mighty, and firm in his purpose.",
+    reference: "Job 36:5",
+  },
+  {
+    text: "God’s voice thunders in marvelous ways; he does great things beyond our understanding.",
+    reference: "Job 37:5",
+  }, 
+  {
+    text: "My ears had heard of you but now my eyes have seen you.",
+    reference: "Job 42:5",
+  },
+  {
+    text: "Indeed, if you call out for insight and cry aloud for understanding, and if you look for it as for silver and search for it as for hidden treasure, then you will understand the fear of the LORD and find the knowledge of God.",
+    reference: "Proverbs 2:3-5",
   },
   {
     text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
     reference: "Proverbs 3:5-6",
   },
   {
+    text: "Wine is a mocker and beer a brawler; whoever is led astray by them is not wise.",
+    reference: "Proverbs 20:1",
+  },
+  {
+    text: "Whoever shuts their ears to the cry of the poor will also cry out and not be answered.",
+    reference: "Proverbs 21:13",
+  },
+  {
     text: "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
     reference: "Isaiah 40:31",
+  },
+  {
+    text: "I will give you hidden treasures, riches stored in secret places, so that you may know that I am the LORD, the God of Israel, who summons you by name.",
+    reference: "Isaiah 45:3",
+  },
+  {
+    text: "You will go out in joy and be led forth in peace; the mountains and hills will burst into song before you, and all the trees of the field will clap their hands.",
+    reference: "Isaiah 55:12"
+  },
+  {
+    text: "'Before I formed you in the womb I knew you, before you were born I set you apart; I appointed you as a prophet to the nations.'",
+    reference: "Jeremiah 1: 5",
   },
   {
     text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",
     reference: "Jeremiah 29:11",
   },
+  {
+    text: "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness.",
+    reference: "Lamentations 3:22",
+  },
+  {
+    text: "'Even now,'' declares the LORD, 'return to me with all your heart, with fasting and weeping and mourning.'",
+    reference: "Joel 2:12",
+  },
+  {
+    text: "This is what the LORD says to Israel: 'Seek me and live'",
+    reference: "Amos 5:4",
+  }
+];
+
+const psalms = [
+  {
+    text: "Blessed is the one who does not walk in step with the wicked or stand in the way that sinners take or sit in the company of mockers,",
+    reference: "Psalms 1:1",
+  },
+  {
+    text: "I lie down and sleep; I wake again, because the LORD sustains me.",
+    reference: "Psalms 3:5",
+  },
+  {
+    text: "In peace I will lie down and sleep, for you alone, LORD, make me dwell in safety.",
+    reference: "Psalms 4:8",
+  }, 
+  {
+    text: "LORD, our Lord, how majestic is your name in all the earth! You have set your glory in the heavens.",
+    reference: "Psalms 8:1",
+  },
+  {
+    text: "I will give thanks to you, LORD, with all my heart; I will tell of all your wonderful deeds.I will be glad and rejoice in you; I will sing the praises of your name, O Most High.",
+    reference: "Psalms 9:1-2",
+  },
+  {
+    text: "The LORD is a refuge for the oppressed, a stronghold in times of trouble. Those who know your name trust in you, for you, LORD, have never forsaken those who seek you.",
+    reference: "Psalms 9:9-10",
+  },
+  {
+    text: "For the LORD is righteous, he loves justice; the upright will see his face.",
+    reference: "Psalms 11:7",
+  },
+  {
+    text: "But I trust in your unfailing love; my heart rejoices in your salvation. I will sing the LORD’s praise, for he has been good to me.",
+    reference: "Psalms 13:1-2"
+  },
+  {
+    text: "I keep my eyes always on the LORD. With him at my right hand, I will not be shaken.",
+    reference: "Psalms 16:8",
+  }, 
+  {
+    text: "Who can discern [his] errors? Clear thou me from hidden [faults].",
+    reference: "Psalms 19:12",
+  },
+  {
+    text: "From birth I was cast on you; from my mother’s womb you have been my God.",
+    reference: "Psalms 22:10",
+  },
+  {
+    text: "For the Chief Musician. A Psalm of David. Jehovah answer thee in the day of trouble; The name of the God of Jacob set thee up on high",
+    reference: "Psalms 20:1",
+  },
+  {
+    text: "The Lord is my shepherd, I lack nothing.",
+    reference: "Psalms 23:1",
+  },
+  {
+    text: "The Lord is my light and my salvation—whom shall I fear?",
+    reference: "Psalms 27:1",
+  },
+  {
+    text: "Teach me your way, LORD; lead me in a straight path because of my oppressors.",
+    reference: "Psalms: 27:11",
+  },
+  {
+    text: "The Lord is my strength and my shield; my heart trusts in him, and he helps me.",
+    reference: "Psalms 28:7",
+  },
+  {
+    text: "The Lord gives strength to his people; the Lord blesses his people with peace.",
+    reference: "Psalms 29:11",
+  },
+  {
+    text: "I sought the LORD, and he answered me; he delivered me from all my fears.",
+    reference: "Psalms 34:4",
+  },
+  {
+    text: "Then my soul will rejoice in the LORD and delight in his salvation.",
+    reference: "Psalms 35:9",
+  },
+  {
+    text: "For with you is the fountain of life; in your light we see light.",
+    reference: "Psalms 36:9",
+  },
+  {
+    text: "Commit your way to the LORD; trust in him and he will do this: He will make your righteous reward shine like the dawn, your vindication like the noonday sun.",
+    reference: "Psalms 37:5-6",
+  },
+  {
+    text: "But now, Lord, what do I look for? My hope is in you.",
+    reference: "Psalms 39:7",
+  },
+  {
+    text: "Send me your light and your faithful care, let them lead me; let them bring me to your holy mountain, to the place where you dwell.",
+    reference: "Psalms 43:3",
+  },
+  {
+    text: "God is our refuge and strength, an ever-present help in trouble.",
+    reference: "Psalms 46:1",
+  },
+  {
+    text: "He says, 'Be still, and know that I am God; I will be exalted among the nations, I will be exalted in the earth.'",
+    reference: "Psalms 46:10",
+  },
+  {
+    text: "For this God is our God for ever and ever; he will be our guide even to the end.",
+    reference: "Psalms 48:14",
+  },
+  {
+    text: "Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken.",
+    reference: "Psalms 55:22",
+  },
+  {
+    text: "Since my youth, God, you have taught me, and to this day I declare your marvelous deeds.",
+    reference: "Psalms 71:17-18",
+  },
+  {
+    text: "Whoever dwells in the shelter of the Most High will rest in the shadow of the Almighty.",
+    reference: "Psalms 91:1",
+  },
+  {
+    text: "For the Lord is good and his love endures forever; his faithfulness continues through all generations.",
+    reference: "Psalms 100:5",
+  },
+  {
+    text: "Praise the LORD. Praise the LORD, you his servants; praise the name of the LORD.",
+    reference: "Psalms 113:1",
+  },
+  {
+    text: "The LORD has done it this very day; let us rejoice today and be glad.",
+    reference: "Psalms 118:24"
+  },
+  {
+    text: "For you created my inmost being; you knit me together in my mother’s womb.",
+    reference: "Psalms 139:13",
+  },
+  {
+    text: "The Lord is near to all who call on him in truth.",
+    reference: "Psalm 145:18",
+  },
 ];
 
 const newTestament = [
   {
+    text: "But when you pray, go into your room, close the door and pray to your Father, who is unseen. Then your Father, who sees what is done in secret, will reward you.",
+    reference: "Matthew 6:6-7",
+  },
+  {
+    text: "Ask and it will be given to you; seek and you will find; knock and the door will be opened to you.",
+    reference: "Matthew 7:7",
+  },
+  {
     text: "Come to me, all you who are weary and burdened, and I will give you rest.",
     reference: "Matthew 11:28",
+  },
+  {
+    text: "He replied, 'Because you have so little faith. Truly I tell you, if you have faith as small as a mustard seed, you can say to this mountain, 'Move from here to there,' and it will move. Nothing will be impossible for you.'",
+    reference: "Matthew 17:20",
+  },
+  {
+    text: "'Have faith in God,' Jesus answered.",
+    reference: "Mark 11:22"
   },
   {
     text: "For nothing is impossible with God.",
     reference: "Luke 1:37",
   },
   {
+    text: "The seventy-two returned with joy and said, 'Lord, even the demons submit to us in your name.'",
+    reference: "Luke 10:17",
+  },
+  {
     text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
     reference: "John 3:16",
-  }, {
+  }, 
+  {
+    text: "Whoever has my commands and keeps them is the one who loves me. The one who loves me will be loved by my Father, and I too will love them and show myself to them.",
+    reference: "John 14:21",
+  },
+  {
     text: "Let not your hearts be troubled, neither let them be afraid.",
     reference: "John 14:27",
   },
   {
     text: "I have told you these things, so that in me you may have peace. In this world you will have trouble. But take heart! I have overcome the world.",
     reference: "John 16:33",
+  },
+  {
+    text: "But you will receive power when the Holy Spirit comes on you; and you will be my witnesses in Jerusalem, and in all Judea and Samaria, and to the ends of the earth.",
+    reference: "Acts 1:8",
+  },
+  {
+    text: "For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.",
+    reference: "Romans 6:23",
+  },
+  {
+    text: "What, then, shall we say in response to these things? If God is for us, who can be against us?",
+    reference: "Romans 8:31",
   },
   {
     text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose.",
@@ -46,48 +290,101 @@ const newTestament = [
     reference: "Romans 12:12",
   },
   {
+    text: "It is written: ' As surely as I live,' says the Lord, 'every knee will bow before me; every tongue will acknowledge God.' So then, each of us will give an account of ourselves to God.",
+    reference: "Romans 14:11-12"
+  },
+  {
+    text: "For the kingdom of God is not a matter of eating and drinking, but of righteousness, peace and joy in the Holy Spirit.",
+    reference: "Romans 14:17",
+  },
+  {
+    text: "And now these three remain: faith, hope and love. But the greatest of these is love.",
+    reference: "1 Corinthians 13:13",
+  },
+  {
     text: "Therefore, if anyone is in Christ, the new creation has come: The old has gone, the new is here!",
     reference: "2 Corinthians 5:17",
   },
   {
-    text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness.",
-    reference: "Galatians 5:22",
+    text: "The weapons we fight with are not the weapons of the world. On the contrary, they have divine power to demolish strongholds.",
+    reference: "2 Corinthians 10:4",
+  },
+  {
+    text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control. Against such things there is no law.",
+    reference: "Galatians 5:22-23",
+  },
+  {
+    text: "In your relationships with one another, have the same mindset as Christ Jesus:",
+    reference: "Philippians 2:5"
   },
   {
     text: "Do not be anxious about anything, but present your requests to God with thanksgiving.",
     reference: "Philippians 4:6",
   },
   {
+    text: "And the peace of God, which transcends all understanding, will guard your hearts and your minds in Christ Jesus.",
+    reference: "Philippians 4:7"
+  },
+  {
     text: "I an do all things through Christ who strengthens me.",
     reference: "Philippians 4:13",
   },
-];
-
-const psalms = [
   {
-    text: "The Lord is my shepherd, I lack nothing.",
-    reference: "Psalm 23:1",
+    text: "rooted and built up in him, strengthened in the faith as you were taught, and overflowing with thankfulness.",
+    reference: "Colossians 2:7",
   },
   {
-    text: "The Lord is my light and my salvation—whom shall I fear?",
-    reference: "Psalm 27:1",
+    text: "Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you.",
+    reference: "Colassians 3:13",
   },
   {
-    text: "The Lord is my strength and my shield; my heart trusts in him, and he helps me.",
-    reference: "Psalm 28:7",
+    text: "Let the peace of Christ rule in your hearts, since as members of one body you were called to peace. And be thankful.",
+    reference: "Colassians 3:15",
   },
   {
-    text: "The Lord gives strength to his people; the Lord blesses his people with peace.",
-    reference: "Psalm 29:11",
+    text: "Do not lie to each other, since you have taken off your old self with its practices and have put on the new self, which is being renewed in knowledge in the image of its Creator.",
+    reference: "Colassians 3:9-10",
+  }
+  {
+    text: "Give thanks in all circumstances; for this is God's will for you in Christ Jesus.",
+    reference: "1 Thessalonians 5:18",
   },
   {
-    text: "Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken.",
-    reference: "Psalm 55:22",
+    text: "He also says, 'In the beginning, Lord, you laid the foundations of the earth, and the heavens are the work of your hands.",
+    reference: "Hebrews 1:10",
   },
   {
-    text: "The Lord is near to all who call on him in truth.",
-    reference: "Psalm 145:18",
+    text: "For the word of God is alive and active. Sharper than any double-edged sword, it penetrates even to dividing soul and spirit, joints and marrow; it judges the thoughts and attitudes of the heart.",
+    reference: "Hebrews 4:12",
   },
+  {
+    text: "Fixing our eyes on Jesus, the pioneer and perfecter of faith. For the joy set before him he endured the cross, scorning its shame, and sat down at the right hand of the throne of God.",
+    reference: "Hebrew 12:2",
+  },
+  {
+    text: "The end of all things is near. Therefore be alert and of sober mind so that you may pray. Above all, love each other deeply, because love covers over a multitude of sins.",
+    reference: "1 Peter 4:7-8",
+  },
+  {
+    text: "Whoever claims to love God yet hates a brother or sister is a liar. For whoever does not love their brother and sister, whom they have seen, cannot love God, whom they have not seen.",
+    reference: "1 John 4:20"
+  },
+  {
+    text: "This is the confidence we have in approaching God: that if we ask anything according to his will, he hears us.",
+    reference: "1 John 5:14",
+  },
+  {
+    text: "We know also that the Son of God has come and has given us understanding, so that we may know him who is true. And we are in him who is true by being in his Son Jesus Christ. He is the true God and eternal life.",
+    reference: "1 John 5:20",
+  },
+  {
+    text: "Dear friend, I pray that you may enjoy good health and that all may go well with you, even as your soul is getting along well.",
+    reference: "3 John 1:2",
+  },
+  {
+    text: "I have no greater joy than to hear that my children are walking in the truth.",
+    reference: "3 John 1:4",
+  },  
 ];
 
 const motivationalSpeeches = [
@@ -373,8 +670,26 @@ const musicManager = {
 };
 
 const quoteManager = {
-  showQuote(index, isBiblical = false) {
-    const quotes = isBiblical ? oldTestament : motivationalSpeeches;
+  currentBibleSection: 'oldTestament',
+  sectionIndices: {
+    oldTestament: 0,
+    newTestament: 0,
+    psalms: 0
+  },
+
+  showQuote(index, isBiblical = false, section = null) {
+    let quotes;
+    if (isBiblical) {
+      if (section) {
+        this.currentBibleSection = section;
+        quotes = this.getBibleQuotes(section);
+      } else {
+        quotes = this.getBibleQuotes(this.currentBibleSection);
+      }
+    } else {
+      quotes = motivationalSpeeches;
+    }
+    
     const quote = quotes[index];
 
     if (!quote) return;
@@ -407,18 +722,69 @@ const quoteManager = {
     this.updateNavigationButtons();
   },
 
+  getBibleQuotes(section) {
+    switch(section) {
+      case 'oldTestament':
+        return oldTestament;
+      case 'newTestament':
+        return newTestament;
+      case 'psalms':
+        return psalms;
+      default:
+        return oldTestament;
+    }
+  },
+
+  showNextQuoteFromSection(section) {
+    const quotes = this.getBibleQuotes(section);
+    const currentIndex = this.sectionIndices[section];
+    this.showQuote(currentIndex, true, section);
+    
+    // Move to next quote in sequence, loop back to beginning if at end
+    this.sectionIndices[section] = (currentIndex + 1) % quotes.length;
+  },
+
+  showRandomQuoteFromAllBible() {
+    const allBibleQuotes = [...oldTestament, ...newTestament, ...psalms];
+    const randomIndex = Math.floor(Math.random() * allBibleQuotes.length);
+    
+    // Find which section this quote belongs to
+    let currentIndex = 0;
+    let section = 'oldTestament';
+    
+    if (randomIndex >= oldTestament.length) {
+      currentIndex = randomIndex - oldTestament.length;
+      if (randomIndex >= oldTestament.length + newTestament.length) {
+        currentIndex = randomIndex - oldTestament.length - newTestament.length;
+        section = 'psalms';
+      } else {
+        section = 'newTestament';
+      }
+    } else {
+      currentIndex = randomIndex;
+    }
+    
+    this.showQuote(currentIndex, true, section);
+  },
+
   showRandomQuote(isBiblical = false) {
-    const quotes = isBiblical ? biblicalQuotes : motivationalSpeeches;
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    this.showQuote(randomIndex, isBiblical);
+    if (isBiblical) {
+      this.showRandomQuoteFromAllBible();
+    } else {
+      const randomIndex = Math.floor(Math.random() * motivationalSpeeches.length);
+      this.showQuote(randomIndex, false);
+    }
   },
 
   showNextQuote() {
     const isBiblical = state.isBibleMode;
-    const quotes = isBiblical ? biblicalQuotes : motivationalSpeeches;
-    const currentIndex = isBiblical ? state.currentBiblicalIndex : state.currentQuoteIndex;
-    const nextIndex = (currentIndex + 1) % quotes.length;
-    this.showQuote(nextIndex, isBiblical);
+    if (isBiblical) {
+      // Use the sequential method for the current section
+      this.showNextQuoteFromSection(this.currentBibleSection);
+    } else {
+      const nextIndex = (state.currentQuoteIndex + 1) % motivationalSpeeches.length;
+      this.showQuote(nextIndex, false);
+    }
   },
 
   showPreviousQuote() {
@@ -428,7 +794,11 @@ const quoteManager = {
     if (history.length > 1) {
       history.pop();
       const previousIndex = history[history.length - 1];
-      this.showQuote(previousIndex, isBiblical);
+      if (isBiblical) {
+        this.showQuote(previousIndex, true, this.currentBibleSection);
+      } else {
+        this.showQuote(previousIndex, false);
+      }
     }
   },
 
@@ -481,7 +851,7 @@ const uiManager = {
     setTimeout(() => {
       if (state.isBibleMode) {
         elements.quoteCard.classList.add("bible-mode");
-        quoteManager.showRandomQuote(true);
+        quoteManager.showNextQuoteFromSection('oldTestament');
         musicManager.switchMode('bible');
       } else {
         elements.quoteCard.classList.remove("bible-mode");
@@ -516,22 +886,48 @@ const inputProcessor = {
   handleMatchedPattern(pattern) {
     const isBiblical = state.isBibleMode;
 
-    switch (pattern) {
-      case "motivate":
-      case "inspire":
-      case "strength":
-      case "focus":
-      case "random":
-        quoteManager.showRandomQuote(isBiblical);
-        break;
-      case "next":
-        quoteManager.showNextQuote();
-        break;
-      case "previous":
-        quoteManager.showPreviousQuote();
-        break;
-      default:
-        quoteManager.showNextQuote();
+    if (isBiblical) {
+      switch (pattern) {
+        case "motivate":
+          quoteManager.showNextQuoteFromSection('oldTestament');
+          break;
+        case "inspire":
+          quoteManager.showNextQuoteFromSection('newTestament');
+          break;
+        case "strength":
+          quoteManager.showNextQuoteFromSection('psalms');
+          break;
+        case "focus":
+        case "random":
+          quoteManager.showRandomQuoteFromAllBible();
+          break;
+        case "next":
+          quoteManager.showNextQuote();
+          break;
+        case "previous":
+          quoteManager.showPreviousQuote();
+          break;
+        default:
+          quoteManager.showNextQuote();
+      }
+    } else {
+      switch (pattern) {
+        case "motivate":
+        case "inspire":
+        case "strength":
+        case "focus":
+        case "random":
+          quoteManager.showRandomQuote(false);
+          break;
+        case "next":
+          quoteManager.showNextQuote();
+          break;
+        case "previous":
+          quoteManager.showPreviousQuote();
+          break;
+        default:
+          quoteManager.showNextQuote();
+      }
     }
   },
 
@@ -550,10 +946,31 @@ const inputProcessor = {
   },
 
   handleQuickAction(action) {
-    if (["motivate", "inspire", "strength", "focus"].includes(action)) {
-      quoteManager.showRandomQuote(state.isBibleMode);
-    } else if (action === "motivational") {
-      uiManager.toggleBibleMode();
+    if (state.isBibleMode) {
+      switch(action) {
+        case "motivate": // Old Testament
+          quoteManager.showNextQuoteFromSection('oldTestament');
+          break;
+        case "inspire": // New Testament
+          quoteManager.showNextQuoteFromSection('newTestament');
+          break;
+        case "strength": // Psalms
+          quoteManager.showNextQuoteFromSection('psalms');
+          break;
+        case "focus": // Random from all Bible sections
+          quoteManager.showRandomQuoteFromAllBible();
+          break;
+        case "motivational":
+          uiManager.toggleBibleMode();
+          break;
+      }
+    } else {
+      // Motivational mode - keep existing behavior
+      if (["motivate", "inspire", "strength", "focus"].includes(action)) {
+        quoteManager.showRandomQuote(false);
+      } else if (action === "motivational") {
+        uiManager.toggleBibleMode();
+      }
     }
   }
 };
@@ -660,10 +1077,10 @@ function init() {
   eventListeners.init();
   interactiveFeatures.init();
 
-  elements.quoteCard.classList.add("bible-mode");
-  uiManager.updateHeader();
-  quoteManager.showRandomQuote(true);
-  uiManager.updateActionButtons();
+      elements.quoteCard.classList.add("bible-mode");
+    uiManager.updateHeader();
+    quoteManager.showNextQuoteFromSection('oldTestament');
+    uiManager.updateActionButtons();
 }
 
 const style = document.createElement("style");
