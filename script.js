@@ -28,7 +28,7 @@ const oldTestament = [
     reference: "Job 36:5",
   },
   {
-    text: "God’s voice thunders in marvelous ways; he does great things beyond our understanding.",
+    text: "God's voice thunders in marvelous ways; he does great things beyond our understanding.",
     reference: "Job 37:5",
   }, 
   {
@@ -203,6 +203,10 @@ const psalms = [
     reference: "Psalms 91:1",
   },
   {
+    text: "It is good to praise the LORD and make music to your name, O Most High, proclaiming your love in the morning and your faithfulness at night,",
+    reference: "Psalms 92:1-2",
+  },
+  {
     text: "For the Lord is good and his love endures forever; his faithfulness continues through all generations.",
     reference: "Psalms 100:5",
   },
@@ -344,7 +348,7 @@ const newTestament = [
   {
     text: "Do not lie to each other, since you have taken off your old self with its practices and have put on the new self, which is being renewed in knowledge in the image of its Creator.",
     reference: "Colassians 3:9-10",
-  }
+  },
   {
     text: "Give thanks in all circumstances; for this is God's will for you in Christ Jesus.",
     reference: "1 Thessalonians 5:18",
