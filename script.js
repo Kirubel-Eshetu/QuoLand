@@ -1,16 +1,66 @@
 const state = {
-  currentQuoteIndex: 0,
   currentBiblicalIndex: 0,
-  viewedQuotes: new Set(),
+  currentQuoteIndex: 0,
   viewedBiblicalQuotes: new Set(),
-  quoteHistory: [],
+  viewedQuotes: new Set(),
   biblicalQuoteHistory: [],
+  quoteHistory: [],
   isBibleMode: true
+};
+
+const quoteLoader = {
+  loadedQuotes: {
+    biblical: {
+      oldTestament: null,
+      psalms: null,
+      newTestament: null
+    },
+    inspirational: {
+      inspirational: null,
+      strengthening: null,
+      focus: null
+    }
+  },
+
+  async loadQuotes(category, type) {
+    try {
+      const response = await fetch(`./quote_data/${category}/${type}.json`);
+      if (!response.ok) {
+        throw new Error(`Failed to load ${type} quotes`);
+      }
+      const quotes = await response.json();
+      this.loadedQuotes[category][type] = quotes;
+      return quotes;
+    } catch (error) {
+      console.error(`Error loading ${type} quotes:`, error);
+      return [];
+    }
+  },
+
+  async getQuotes(category, type) {
+    if (!this.loadedQuotes[category][type]) {
+      await this.loadQuotes(category, type);
+    }
+    return this.loadedQuotes[category][type] || [];
+  },
+
+  async preloadAllQuotes() {
+    const promises = [
+      this.loadQuotes('biblical', 'old_testament'),
+      this.loadQuotes('biblical', 'psalms'),
+      this.loadQuotes('biblical', 'new_testament'),
+      this.loadQuotes('inspirational', 'inspirational_quotes'),
+      this.loadQuotes('inspirational', 'strengthening_quotes'),
+      this.loadQuotes('inspirational', 'focus_quotes'),
+    ];
+
+    await Promise.all(promises);
+  }
 };
 
 const elements = {
   quoteText: document.getElementById("quote-text"),
-  quoteAuthor: document.getElementById("quote-author"),
+  quoteRef: document.getElementById("quote-ref"),
   userInput: document.getElementById("user-input"),
   submitBtn: document.getElementById("submit-btn"),
   prevBtn: document.getElementById("prev-btn"),
@@ -24,12 +74,15 @@ const elements = {
 };
 
 const inputPatterns = {
-  inspire: ["inspire", "inspiration", "inspire me", "give me inspiration", "i need inspiration"],
-  strength: ["strength", "strong", "give me strength", "i need strength", "power"],
+  teach: ["teach", "teach me", "teach me wisdom", "old testament", "old"],
+  lead: ["lead", "lead me", "guide me through", "psalms", "psalm"],
+  guide: ["guide", "guide me", "new testament", "new"],
+  inspire: ["inspire", "inspiration", "inspire me", "give me inspiration"],
+  strengthen: ["strengthen", "strengthen me", "give me strength", "i need strength", "power"],
   focus: ["focus", "concentrate", "help me focus", "i need focus", "concentration"],
+  random: ["random", "surprise me", "any quote", "whatever"],
   next: ["next", "next quote", "another", "more", "continue"],
-  previous: ["previous", "back", "go back", "last quote"],
-  random: ["random", "surprise me", "any quote", "whatever"]
+  previous: ["previous", "back", "go back", "last quote"]
 };
 
 const buttonConfigs = {
@@ -53,12 +106,12 @@ const headerConfigs = {
   bible: {
     title: '<i class="fas fa-cross"></i> Biblical Wisdom',
     subtitle: "Find spiritual guidance and divine inspiration 🙏🏾",
-    placeholder: "Type 'strengthen me' or 'guide me'..."
+    placeholder: "Type 'teach me', 'lead me' or 'guide me'..."
   },
   inspirational: {
     title: '<i class="fas fa-fire"></i> inspirational Speeches',
     subtitle: "Find your daily dose of inspiration",
-    placeholder: "Type 'motivate me' or 'give me inspiration'..."
+    placeholder: "Type 'inspire me', 'strengthen me' or'help me focus'..."
   }
 };
 
@@ -93,7 +146,7 @@ const themeManager = {
 const musicManager = {
   audio: null,
   isPlaying: false,
-  currentMode: 'bible', 
+  currentMode: 'bible',
 
   init() {
     this.createAudioElements();
@@ -110,8 +163,8 @@ const musicManager = {
     this.inspirationalAudio.loop = true;
     this.inspirationalAudio.volume = 0.3;
 
-    this.bibleAudio.src = './Music/Track 11 ከሙሴ የሚልቅ.mp3'; 
-    this.inspirationalAudio.src = './Music/David_Goggins.mp3'; 
+    this.bibleAudio.src = './Music/Track 11 ከሙሴ የሚልቅ.mp3';
+    this.inspirationalAudio.src = './Music/David_Goggins.mp3';
 
     this.audio = this.bibleAudio;
   },
@@ -200,19 +253,34 @@ const quoteManager = {
     psalms: 0
   },
 
-  showQuote(index, isBiblical = false, section = null) {
+  async showQuote(index, isBiblical = false, section = null, category = null) {
     let quotes;
     if (isBiblical) {
       if (section) {
         this.currentBibleSection = section;
-        quotes = this.getBibleQuotes(section);
+        quotes = await this.getBibleQuotes(section);
       } else {
-        quotes = this.getBibleQuotes(this.currentBibleSection);
+        quotes = await this.getBibleQuotes(this.currentBibleSection);
       }
     } else {
-      quotes = inspirationalSpeeches;
+      const quoteCategory = category || 'inspirational';
+      let fileCategory;
+      switch(quoteCategory) {
+        case 'inspirational':
+          fileCategory = 'inspirational_quotes';
+          break;
+        case 'strengthening':
+          fileCategory = 'strengthening_quotes';
+          break;
+        case 'focus':
+          fileCategory = 'focus_quotes';
+          break;
+        default:
+          fileCategory = 'inspirational_quotes';
+      }
+      quotes = await quoteLoader.getQuotes('inspirational', fileCategory);
     }
-    
+
     const quote = quotes[index];
 
     if (!quote) return;
@@ -221,7 +289,7 @@ const quoteManager = {
 
     setTimeout(() => {
       elements.quoteText.textContent = quote.text;
-      elements.quoteAuthor.textContent = isBiblical ? `- ${quote.reference}` : `- ${quote.author}`;
+      elements.quoteRef.textContent = isBiblical ? `- ${quote.reference}` : `- ${quote.author}`;
 
       elements.quoteCard.classList.remove("fade-out");
       elements.quoteCard.classList.add("fade-in");
@@ -245,72 +313,126 @@ const quoteManager = {
     this.updateNavigationButtons();
   },
 
-  getBibleQuotes(section) {
-    switch(section) {
+  async getBibleQuotes(section) {
+    switch (section) {
       case 'oldTestament':
-        return oldTestament;
-      case 'newTestament':
-        return newTestament;
+        return await quoteLoader.getQuotes('biblical', 'old_testament');
       case 'psalms':
-        return psalms;
+        return await quoteLoader.getQuotes('biblical', 'psalms');
+      case 'newTestament':
+        return await quoteLoader.getQuotes('biblical', 'new_testament');
       default:
-        return oldTestament;
+        return await quoteLoader.getQuotes('biblical', 'old_testament');
     }
   },
 
-  showNextQuoteFromSection(section) {
-    const quotes = this.getBibleQuotes(section);
+  async showNextQuoteFromSection(section) {
+    const quotes = await this.getBibleQuotes(section);
     const currentIndex = this.sectionIndices[section];
-    this.showQuote(currentIndex, true, section);
-    
-    // Move to next quote in sequence, loop back to beginning if at end
+    await this.showQuote(currentIndex, true, section);
+
     this.sectionIndices[section] = (currentIndex + 1) % quotes.length;
   },
 
-  showRandomQuoteFromAllBible() {
-    const allBibleQuotes = [...oldTestament, ...newTestament, ...psalms];
+  async showRandomQuoteFromAllBible() {
+    const [oldTestament, newTestament, psalms] = await Promise.all([
+      quoteLoader.getQuotes('biblical', 'old_testament'),
+      quoteLoader.getQuotes('biblical', 'new_testament'),
+      quoteLoader.getQuotes('biblical', 'psalms')
+    ]);
+
+    const allBibleQuotes = [...oldTestament, ...psalms, ...newTestament];
     const randomIndex = Math.floor(Math.random() * allBibleQuotes.length);
-    
-    // Find which section this quote belongs to
+
     let currentIndex = 0;
     let section = 'oldTestament';
-    
+
     if (randomIndex >= oldTestament.length) {
       currentIndex = randomIndex - oldTestament.length;
-      if (randomIndex >= oldTestament.length + newTestament.length) {
-        currentIndex = randomIndex - oldTestament.length - newTestament.length;
-        section = 'psalms';
-      } else {
+      if (randomIndex >= oldTestament.length + psalms.length) {
+        currentIndex = randomIndex - oldTestament.length - psalms.length;
         section = 'newTestament';
+      } else {
+        section = 'psalms';
+      }
+    } else {
+      currentIndex = randomIndex;
+    }
+
+    await this.showQuote(currentIndex, true, section);
+  },
+
+  async showRandomQuote(isBiblical = false) {
+    if (isBiblical) {
+      await this.showRandomQuoteFromAllBible();
+    } else {
+      const quotes = await quoteLoader.getQuotes('inspirational', 'inspirational_quotes');
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      await this.showQuote(randomIndex, false);
+    }
+  },
+
+  async showRandomQuoteFromCategory(category) {
+    let fileCategory;
+    switch(category) {
+      case 'inspirational':
+        fileCategory = 'inspirational_quotes';
+        break;
+      case 'strengthening':
+        fileCategory = 'strengthening_quotes';
+        break;
+      case 'focus':
+        fileCategory = 'focus_quotes';
+        break;
+      default:
+        fileCategory = 'inspirational_quotes';
+    }
+    
+    const quotes = await quoteLoader.getQuotes('inspirational', fileCategory);
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    await this.showQuote(randomIndex, false, null, category);
+  },
+
+  async showRandomQuoteFromAllInspirational() {
+    const [inspirational, strengthening, focus] = await Promise.all([
+      quoteLoader.getQuotes('inspirational', 'inspirational_quotes'),
+      quoteLoader.getQuotes('inspirational', 'strengthening_quotes'),
+      quoteLoader.getQuotes('inspirational', 'focus_quotes')
+    ]);
+    
+    const allInspirationalQuotes = [...inspirational, ...strengthening, ...focus];
+    const randomIndex = Math.floor(Math.random() * allInspirationalQuotes.length);
+    
+    let currentIndex = 0;
+    let category = 'inspirational';
+    
+    if (randomIndex >= inspirational.length) {
+      currentIndex = randomIndex - inspirational.length;
+      if (randomIndex >= inspirational.length + strengthening.length) {
+        currentIndex = randomIndex - inspirational.length - strengthening.length;
+        category = 'focus';
+      } else {
+        category = 'strengthening';
       }
     } else {
       currentIndex = randomIndex;
     }
     
-    this.showQuote(currentIndex, true, section);
+    await this.showQuote(currentIndex, false, null, category);
   },
 
-  showRandomQuote(isBiblical = false) {
-    if (isBiblical) {
-      this.showRandomQuoteFromAllBible();
-    } else {
-      const randomIndex = Math.floor(Math.random() * inspirationalSpeeches.length);
-      this.showQuote(randomIndex, false);
-    }
-  },
-
-  showNextQuote() {
+  async showNextQuote() {
     const isBiblical = state.isBibleMode;
     if (isBiblical) {
-      // Use the sequential method for the current section
-      this.showNextQuoteFromSection(this.currentBibleSection);
+      await this.showNextQuoteFromSection(this.currentBibleSection);
     } else {
-      const nextIndex = (state.currentQuoteIndex + 1) % inspirationalSpeeches.length;
-      this.showQuote(nextIndex, false);
+      const quotes = await quoteLoader.getQuotes('inspirational', 'inspirational_quotes');
+      const nextIndex = (state.currentQuoteIndex + 1) % quotes.length;
+      await this.showQuote(nextIndex, false);
     }
   },
 
-  showPreviousQuote() {
+  async showPreviousQuote() {
     const isBiblical = state.isBibleMode;
     const history = isBiblical ? state.biblicalQuoteHistory : state.quoteHistory;
 
@@ -318,9 +440,9 @@ const quoteManager = {
       history.pop();
       const previousIndex = history[history.length - 1];
       if (isBiblical) {
-        this.showQuote(previousIndex, true, this.currentBibleSection);
+        await this.showQuote(previousIndex, true, this.currentBibleSection);
       } else {
-        this.showQuote(previousIndex, false);
+        await this.showQuote(previousIndex, false);
       }
     }
   },
@@ -342,7 +464,6 @@ const quoteManager = {
   }
 };
 
-// UI manager
 const uiManager = {
   updateActionButtons() {
     const config = state.isBibleMode ? buttonConfigs.bible : buttonConfigs.inspirational;
@@ -366,19 +487,19 @@ const uiManager = {
     elements.userInput.placeholder = config.placeholder;
   },
 
-  toggleBibleMode() {
+  async toggleBibleMode() {
     state.isBibleMode = !state.isBibleMode;
 
     elements.quoteCard.classList.add("flipping");
 
-    setTimeout(() => {
+    setTimeout(async () => {
       if (state.isBibleMode) {
         elements.quoteCard.classList.add("bible-mode");
-        quoteManager.showNextQuoteFromSection('oldTestament');
+        await quoteManager.showNextQuoteFromSection('oldTestament');
         musicManager.switchMode('bible');
       } else {
         elements.quoteCard.classList.remove("bible-mode");
-        quoteManager.showRandomQuote(false);
+        await quoteManager.showRandomQuote(false);
         musicManager.switchMode('inspirational');
       }
 
@@ -395,7 +516,6 @@ const uiManager = {
   }
 };
 
-// Input processor
 const inputProcessor = {
   findMatchingPattern(input) {
     for (const [category, patterns] of Object.entries(inputPatterns)) {
@@ -406,55 +526,59 @@ const inputProcessor = {
     return null;
   },
 
-  handleMatchedPattern(pattern) {
+  async handleMatchedPattern(pattern) {
     const isBiblical = state.isBibleMode;
 
     if (isBiblical) {
       switch (pattern) {
-        case "motivate":
-          quoteManager.showNextQuoteFromSection('oldTestament');
+        case "teach":
+          await quoteManager.showNextQuoteFromSection('oldTestament');
           break;
-        case "inspire":
-          quoteManager.showNextQuoteFromSection('newTestament');
+        case "lead":
+          await quoteManager.showNextQuoteFromSection('psalms');
           break;
-        case "strength":
-          quoteManager.showNextQuoteFromSection('psalms');
+        case "guide":
+          await quoteManager.showNextQuoteFromSection('newTestament');
           break;
-        case "focus":
         case "random":
-          quoteManager.showRandomQuoteFromAllBible();
+          await quoteManager.showRandomQuoteFromAllBible();
           break;
         case "next":
-          quoteManager.showNextQuote();
+          await quoteManager.showNextQuote();
           break;
         case "previous":
-          quoteManager.showPreviousQuote();
+          await quoteManager.showPreviousQuote();
           break;
         default:
-          quoteManager.showNextQuote();
+          await quoteManager.showNextQuote();
       }
     } else {
       switch (pattern) {
-        case "motivate":
         case "inspire":
-        case "strength":
+          await quoteManager.showRandomQuoteFromCategory('inspirational');
+          break;
+        case "strengthen":
+          await quoteManager.showRandomQuoteFromCategory('strengthening');
+          break;
         case "focus":
+          await quoteManager.showRandomQuoteFromCategory('focus');
+          break;
         case "random":
-          quoteManager.showRandomQuote(false);
+          await quoteManager.showRandomQuoteFromAllInspirational();
           break;
         case "next":
-          quoteManager.showNextQuote();
+          await quoteManager.showNextQuote();
           break;
         case "previous":
-          quoteManager.showPreviousQuote();
+          await quoteManager.showPreviousQuote();
           break;
         default:
-          quoteManager.showNextQuote();
+          await quoteManager.showNextQuote();
       }
     }
   },
 
-  handleUserInput() {
+  async handleUserInput() {
     const input = elements.userInput.value.trim().toLowerCase();
     if (!input) return;
 
@@ -462,37 +586,48 @@ const inputProcessor = {
     const matchedPattern = this.findMatchingPattern(input);
 
     if (matchedPattern) {
-      this.handleMatchedPattern(matchedPattern);
+      await this.handleMatchedPattern(matchedPattern);
     } else {
-      quoteManager.showNextQuote();
+      await quoteManager.showNextQuote();
     }
   },
 
-  handleQuickAction(action) {
+  async handleQuickAction(action) {
     if (state.isBibleMode) {
-      switch(action) {
-        case "motivate": // Old Testament
-          quoteManager.showNextQuoteFromSection('oldTestament');
+      switch (action) {
+        case "oldT": 
+          await quoteManager.showNextQuoteFromSection('oldTestament');
           break;
-        case "inspire": // New Testament
-          quoteManager.showNextQuoteFromSection('newTestament');
+        case "psalm": 
+          await quoteManager.showNextQuoteFromSection('psalms');
           break;
-        case "strength": // Psalms
-          quoteManager.showNextQuoteFromSection('psalms');
+        case "newT": 
+          await quoteManager.showNextQuoteFromSection('newTestament');
           break;
-        case "focus": // Random from all Bible sections
-          quoteManager.showRandomQuoteFromAllBible();
+        case "random": 
+          await quoteManager.showRandomQuoteFromAllBible();
           break;
-        case "inspirational":
+        case "inspirational": 
           uiManager.toggleBibleMode();
           break;
       }
     } else {
-      // inspirational mode - keep existing behavior
-      if (["motivate", "inspire", "strength", "focus"].includes(action)) {
-        quoteManager.showRandomQuote(false);
-      } else if (action === "inspirational") {
-        uiManager.toggleBibleMode();
+      switch (action) {
+        case "inspire": 
+          await quoteManager.showRandomQuoteFromCategory('inspirational');
+          break;
+        case "strength": 
+          await quoteManager.showRandomQuoteFromCategory('strengthening');
+          break;
+        case "focus": 
+          await quoteManager.showRandomQuoteFromCategory('focus');
+          break;
+        case "random": 
+          await quoteManager.showRandomQuoteFromAllInspirational();
+          break;
+        case "biblical": 
+          uiManager.toggleBibleMode();
+          break;
       }
     }
   }
@@ -501,13 +636,17 @@ const inputProcessor = {
 const interactiveFeatures = {
   init() {
     elements.quoteCard.addEventListener("dblclick", () => {
-      const textToCopy = `${elements.quoteText.textContent} - ${elements.quoteAuthor.textContent}`;
+      const textToCopy = `${elements.quoteText.textContent} - ${elements.quoteRef.textContent}`;
       navigator.clipboard.writeText(textToCopy).then(() => {
         this.showToast("Quote copied to clipboard!");
       });
     });
 
     document.addEventListener("keydown", (e) => {
+      if (document.activeElement === elements.userInput) {
+        return;
+      }
+
       const key = e.key.toLowerCase();
 
       switch (key) {
@@ -593,17 +732,20 @@ const eventListeners = {
   }
 };
 
-function init() {
+async function init() {
   themeManager.init();
   musicManager.init();
+
+  await quoteLoader.preloadAllQuotes();
+
   quoteManager.updateStats();
   eventListeners.init();
   interactiveFeatures.init();
 
-      elements.quoteCard.classList.add("bible-mode");
-    uiManager.updateHeader();
-    quoteManager.showNextQuoteFromSection('oldTestament');
-    uiManager.updateActionButtons();
+  elements.quoteCard.classList.add("bible-mode");
+  uiManager.updateHeader();
+  await quoteManager.showNextQuoteFromSection('oldTestament');
+  uiManager.updateActionButtons();
 }
 
 const style = document.createElement("style");
@@ -649,7 +791,8 @@ window.inspirationalApp = {
   showNextQuote: () => quoteManager.showNextQuote(),
   showPreviousQuote: () => quoteManager.showPreviousQuote(),
   showRandomQuote: () => quoteManager.showRandomQuote(state.isBibleMode),
-  addQuote: (text, author) => {
-    inspirationalSpeeches.push({ text, author });
+  addQuote: async (text, author) => {
+    const quotes = await quoteLoader.getQuotes('inspirational', 'inspirational_quotes');
+    quotes.push({ text, author });
   },
 };
