@@ -52,10 +52,6 @@
       "reference": "Psalms 21:6"
     },
     {
-      "text": "Surely God is my help; the Lord is the one who sustains me.",
-      "reference": "Psalms 54:4"
-    },
-    {
       "text": "The Lord is my shepherd, I lack nothing.",
       "reference": "Psalms 23:1"
     },
@@ -70,6 +66,10 @@
     {
       "text": "Teach me your way, LORD; lead me in a straight path because of my oppressors.",
       "reference": "Psalms: 27:11"
+    },
+    {
+      "text": "I remain confident of this: I will see the goodness of the LORD in the land of the living. Wait for the LORD; be strong and take heart and wait for the LORD.",
+      "reference": "Psalms 27:13-14"
     },
     {
       "text": "The Lord is my strength and my shield; my heart trusts in him, and he helps me.",
@@ -124,8 +124,20 @@
       "reference": "Psalms 52:8-9"
     },
     {
+      "text": "Surely God is my help; the Lord is the one who sustains me.",
+      "reference": "Psalms 54:4"
+    },
+    {
       "text": "Cast your cares on the Lord and he will sustain you; he will never let the righteous be shaken.",
       "reference": "Psalms 55:22"
+    },
+    {
+      "text": "But I will sing of your strength, in the morning I will sing of your love; for you are my fortress, my refuge in times of trouble.",
+      "reference": "Psalms 59:16"
+    },
+    {
+      "text": "Truly my soul finds rest in God; my salvation comes from him. Truly he is my rock and my salvation; he is my fortress, I will never be shaken.",
+      "reference": "Psalms 62:1-2"
     },
     {
       "text": "Since my youth, God, you have taught me, and to this day I declare your marvelous deeds.",
@@ -134,6 +146,10 @@
     {
       "text": "For the LORD God is a sun and shield; the LORD bestows favor and honor; no good thing does he withhold from those whose walk is blameless.",
       "reference": "Psalms 84:11"
+    },
+    {
+      "text": "Before the mountains were born or you brought forth the whole world, from everlasting to everlasting you are God.",
+      "reference": "Psalms 90:2"
     },
     {
       "text": "Whoever dwells in the shelter of the Most High will rest in the shadow of the Almighty.",
@@ -159,6 +175,14 @@
       "text": "The LORD has done it this very day; let us rejoice today and be glad.",
       "reference": "Psalms 118:24"
     },
+    {
+      "text": "I rejoice in following your statutes as one rejoices in great riches.",
+      "reference": "Psalms 119:14"
+    },
+    {
+      "text": "May the LORD bless you from Zion, he who is the Maker of heaven and earth.",
+      "reference": "Psalms 134:3"
+    }
     {
       "text": "For you created my inmost being; you knit me together in my mother's womb.",
       "reference": "Psalms 139:13"
