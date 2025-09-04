@@ -1,0 +1,542 @@
+:root {
+  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-border: rgba(255, 255, 255, 0.2);
+  --text-color: #2d3748;
+  --quote-color: #667eea;
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --button-bg: rgba(255, 255, 255, 0.9);
+  --button-text: #667eea;
+  --button-border: rgba(255, 255, 255, 0.2);
+  --button-color: #667eea;
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --gold: #ffd700;
+  --heart: #ff6b6b;
+  --transition: all 0.3s ease;
+  --border-radius: 20px;
+  --border-radius-sm: 25px;
+  --border-radius-lg: 50px;
+}
+
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --card-bg: rgba(30, 30, 50, 0.95);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-color: #e2e8f0;
+  --quote-color: #60a5fa;
+  --input-bg: rgba(30, 30, 50, 0.9);
+  --button-bg: rgba(30, 30, 50, 0.9);
+  --button-text: #60a5fa;
+  --button-border: rgba(255, 255, 255, 0.1);
+  --button-color: #60a5fa;
+  --nav-bg: rgba(30, 30, 50, 0.8);
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background 0.3s ease;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  color: white;
+  position: relative;
+}
+
+.header-content {
+  text-align: center;
+  flex: 1;
+}
+
+.header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.header h1 i {
+  color: var(--gold);
+  margin-right: 15px;
+}
+
+.header p {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.music-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.music-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.music-toggle.playing {
+  background: rgba(102, 126, 234, 0.3);
+  color: var(--gold);
+}
+
+.music-toggle.playing:hover {
+  background: rgba(102, 126, 234, 0.4);
+}
+
+.music-toggle i {
+  transition: transform 0.3s ease;
+}
+
+.music-toggle:hover i {
+  transform: scale(1.1);
+}
+
+.music-toggle.playing i {
+  animation: music-pulse 2s infinite;
+}
+
+@keyframes music-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle i {
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover i {
+  transform: rotate(15deg);
+}
+
+[data-theme="dark"] .theme-toggle {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.quote-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  perspective: 1000px;
+}
+
+.quote-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 40px;
+  box-shadow: 0 20px 40px var(--shadow);
+  text-align: center;
+  max-width: 800px;
+  width: 100%;
+  position: relative;
+  transition: var(--transition);
+  border: 1px solid var(--card-border);
+  transform-style: preserve-3d;
+}
+
+.quote-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px var(--shadow-hover);
+}
+
+.quote-icon {
+  font-size: 3rem;
+  color: var(--quote-color);
+  margin-bottom: 20px;
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .quote-icon {
+  color: #60a5fa;
+}
+
+#quote-text {
+  font-size: 1.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 20px;
+  color: var(--text-color);
+  font-style: italic;
+}
+
+#quote-author {
+  font-size: 1.1rem;
+  color: var(--quote-color);
+  font-weight: 600;
+  display: block;
+}
+
+.quote-card.bible-mode {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(210, 105, 30, 0.95) 100%);
+  border: 2px solid #8B4513;
+}
+
+.quote-card.bible-mode .quote-icon {
+  color: var(--gold);
+}
+
+.quote-card.bible-mode #quote-text {
+  color: #FFF8DC;
+}
+
+.quote-card.bible-mode #quote-author {
+  color: var(--gold);
+}
+
+.quote-card.fade-out {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.quote-card.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quote-card.flipping {
+  transform: rotateY(180deg);
+}
+
+.quote-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.quote-card.bible-mode.fade-out {
+  opacity: 0;
+  transform: translateY(20px) rotateY(180deg);
+}
+
+.quote-card.bible-mode.fade-in {
+  opacity: 1;
+  transform: translateY(0) rotateY(180deg);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.input-section {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
+#user-input {
+  flex: 1;
+  padding: 15px 20px;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  font-size: 1rem;
+  background: var(--input-bg);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 5px 15px var(--shadow);
+  transition: var(--transition);
+  color: var(--text-color);
+}
+
+#user-input:focus {
+  outline: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+#user-input::placeholder {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.primary-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #c8ff00 0%, #00ff33 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+.quick-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 12px 20px;
+  background: var(--button-bg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 3px 10px var(--shadow);
+  color: var(--button-text);
+}
+
+.action-btn:hover {
+  background: var(--quote-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn i {
+  margin-right: 8px;
+}
+
+.action-btn[data-action="inspirational"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+  border: 2px solid #667eea !important;
+}
+
+.action-btn[data-action="inspirational"]:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.quote-card.bible-mode ~ .controls .action-btn[data-action="inspirational"] {
+  background: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  border: none !important;
+}
+
+.quote-card.bible-mode ~ .controls .action-btn[data-action="inspirational"]:hover {
+  background: var(--quote-color) !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.navigation {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-btn {
+  padding: 12px 20px;
+  background: var(--nav-bg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--button-text);
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--quote-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.stat-item {
+  text-align: center;
+  color: white;
+}
+
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+[data-theme="dark"] .stat-number {
+  color: #fbbf24;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  color: white;
+  margin-top: 40px;
+  opacity: 0.8;
+}
+
+.footer i {
+  color: var(--heart);
+  margin: 0 5px;
+}
+
+.footer span {
+  font-weight: 900;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .quote-card {
+    padding: 30px 20px;
+    margin: 0 10px;
+  }
+
+  #quote-text {
+    font-size: 1.4rem;
+  }
+
+  .input-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-btn {
+    width: 200px;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .quote-card {
+    padding: 25px 15px;
+  }
+
+  #quote-text {
+    font-size: 1.2rem;
+  }
+
+  .header-controls {
+    gap: 10px;
+  }
+  
+  .music-toggle,
+  .theme-toggle {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+}
