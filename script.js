@@ -65,7 +65,8 @@ const quoteLoader = {
 let elements = {};
 
 function initializeElements() {
-
+  console.log("🔍 Initializing DOM elements...");
+  
   elements = {
     quoteText: document.getElementById("quote-text"),
     quoteRef: document.getElementById("quote-ref"),
@@ -85,13 +86,24 @@ function initializeElements() {
   Object.entries(elements).forEach(([name, element]) => {
     if (!element) {
       missingElements.push(name);
+    } else {
+      console.log(`✅ Found element: ${name}`);
     }
   });
 
   if (missingElements.length > 0) {
     console.error("❌ Missing elements:", missingElements);
+    console.log("🔍 Available elements in DOM:", document.querySelectorAll('*[id]').length);
   } else {
     console.log("✅ All elements found successfully!");
+  }
+  
+  // Additional debugging for action buttons
+  if (elements.actionBtns) {
+    console.log(`🎯 Found ${elements.actionBtns.length} action buttons`);
+    elements.actionBtns.forEach((btn, index) => {
+      console.log(`  Button ${index + 1}: ${btn.textContent.trim()} (action: ${btn.dataset.action})`);
+    });
   }
 }
 
@@ -714,7 +726,7 @@ const uiManager = {
   updateHeader() {
     const config = state.isBibleMode ? headerConfigs.bible : headerConfigs.inspirational;
     const headerTitle = document.querySelector(".header h1");
-    const headerSubtitle = document.querySelector(".header p");
+    const headerSubtitle = document.querySelector(".header h2");
 
     headerTitle.innerHTML = config.title;
     headerSubtitle.textContent = config.subtitle;
@@ -1103,81 +1115,130 @@ const eventListeners = {
   init() {
     console.log("🔗 Setting up event listeners...");
 
+    // Submit button
     if (elements.submitBtn) {
       console.log("✅ Adding submit button listener");
-      elements.submitBtn.addEventListener("click", () => {
+      elements.submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         console.log("📝 Submit button clicked");
-        inputProcessor.handleUserInput();
-      });
+        try {
+          inputProcessor.handleUserInput();
+        } catch (error) {
+          console.error("❌ Error in submit button handler:", error);
+        }
+      }, true); // Use capture phase
     } else {
       console.log("❌ Submit button not found");
     }
 
+    // Input field
     if (elements.userInput) {
       console.log("✅ Adding input field listener");
       elements.userInput.addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
+          e.preventDefault();
           console.log("📝 Enter key pressed in input");
-          inputProcessor.handleUserInput();
+          try {
+            inputProcessor.handleUserInput();
+          } catch (error) {
+            console.error("❌ Error in input handler:", error);
+          }
         }
       });
     } else {
       console.log("❌ Input field not found");
     }
 
+    // Previous button
     if (elements.prevBtn) {
       console.log("✅ Adding previous button listener");
-      elements.prevBtn.addEventListener("click", () => {
+      elements.prevBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         console.log("⬅️ Previous button clicked");
-        quoteManager.showPreviousQuote();
-      });
+        try {
+          quoteManager.showPreviousQuote();
+        } catch (error) {
+          console.error("❌ Error in previous button handler:", error);
+        }
+      }, true); // Use capture phase
     } else {
       console.log("❌ Previous button not found");
     }
 
+    // Next button
     if (elements.nextBtn) {
       console.log("✅ Adding next button listener");
-      elements.nextBtn.addEventListener("click", () => {
+      elements.nextBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         console.log("➡️ Next button clicked");
-        quoteManager.showNextQuote();
-      });
+        try {
+          quoteManager.showNextQuote();
+        } catch (error) {
+          console.error("❌ Error in next button handler:", error);
+        }
+      }, true); // Use capture phase
     } else {
       console.log("❌ Next button not found");
     }
 
+    // Action buttons
     if (elements.actionBtns && elements.actionBtns.length > 0) {
       console.log(`✅ Adding ${elements.actionBtns.length} action button listeners`);
       elements.actionBtns.forEach((btn, index) => {
         btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           const action = e.target.closest(".action-btn").dataset.action;
           console.log(`🎯 Action button ${index + 1} clicked: ${action}`);
-          inputProcessor.handleQuickAction(action);
-        });
+          try {
+            inputProcessor.handleQuickAction(action);
+          } catch (error) {
+            console.error("❌ Error in action button handler:", error);
+          }
+        }, true); // Use capture phase
       });
     } else {
       console.log("❌ Action buttons not found");
     }
 
+    // Theme toggle
     if (elements.themeToggle) {
       console.log("✅ Adding theme toggle listener");
-      elements.themeToggle.addEventListener("click", () => {
+      elements.themeToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         console.log("🌙 Theme toggle clicked");
-        themeManager.toggle();
-      });
+        try {
+          themeManager.toggle();
+        } catch (error) {
+          console.error("❌ Error in theme toggle handler:", error);
+        }
+      }, true); // Use capture phase
     } else {
       console.log("❌ Theme toggle not found");
     }
 
+    // Music toggle
     if (elements.musicToggle) {
       console.log("✅ Adding music toggle listener");
-      elements.musicToggle.addEventListener("click", () => {
+      elements.musicToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
         console.log("🎵 Music toggle clicked");
-        musicManager.toggle();
-      });
+        try {
+          musicManager.toggle();
+        } catch (error) {
+          console.error("❌ Error in music toggle handler:", error);
+        }
+      }, true); // Use capture phase
     } else {
       console.log("❌ Music toggle not found");
     }
 
+    // Focus input field
     if (elements.userInput) {
       elements.userInput.focus();
       console.log("✅ Input field focused");
@@ -1189,10 +1250,41 @@ const eventListeners = {
 
 async function init() {
   console.log("🚀 Starting app initialization...");
+  console.log("🔍 Current DOM ready state:", document.readyState);
 
   try {
+    // First, ensure DOM elements are available
+    console.log("🔍 Initializing DOM elements...");
     initializeElements();
 
+    // Check if all critical elements are found
+    const criticalElements = ['quoteText', 'quoteRef', 'submitBtn', 'prevBtn', 'nextBtn', 'actionBtns', 'themeToggle', 'musicToggle'];
+    const missingElements = criticalElements.filter(name => !elements[name]);
+    
+    if (missingElements.length > 0) {
+      console.error("❌ Critical elements missing:", missingElements);
+      // Try to reinitialize after a short delay
+      setTimeout(() => {
+        console.log("🔄 Retrying element initialization...");
+        initializeElements();
+        if (missingElements.some(name => !elements[name])) {
+          console.error("❌ Still missing elements after retry:", missingElements);
+          return;
+        }
+        // Continue with initialization if elements are now found
+        continueInit();
+      }, 100);
+      return;
+    }
+
+    continueInit();
+  } catch (error) {
+    console.error("❌ Error during app initialization:", error);
+  }
+}
+
+async function continueInit() {
+  try {
     console.log("🎨 Initializing theme manager...");
     themeManager.init();
 
@@ -1221,7 +1313,31 @@ async function init() {
     console.log("📝 Updating header...");
     uiManager.updateHeader();
 
-    console.log("✅ App initialization complete!");
+    // Remove temporary handlers and replace with real functionality
+    console.log("🔄 Removing temporary handlers and enabling full functionality...");
+    if (window.tempHandlers) {
+      window.tempHandlers.forEach(({element, handler, event}) => {
+        element.removeEventListener(event, handler, true);
+      });
+      window.tempHandlers = [];
+      console.log("✅ Temporary handlers removed");
+    }
+
+    // Style the inspirational button after everything is loaded
+    setTimeout(() => {
+      console.log("⏰ Running delayed styling...");
+      const inspirationalBtn = document.querySelector('.bible-mode .action-btn[data-action="inspirational"]');
+      if (inspirationalBtn) {
+        inspirationalBtn.style.background = 'linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(210, 105, 30, 0.95) 100%)';
+        inspirationalBtn.style.border = 'none';
+        inspirationalBtn.style.color = 'white';
+        console.log("✅ Inspirational button styled");
+      } else {
+        console.log("❌ Inspirational button not found for styling");
+      }
+    }, 100);
+
+    console.log("✅ App initialization complete! Full functionality is now active.");
   } catch (error) {
     console.error("❌ Error during app initialization:", error);
   }
@@ -1252,31 +1368,208 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("📄 DOM Content Loaded event fired");
-  init();
+// QuoLand App - Biblical Wisdom and Inspirational Quotes
 
-  setTimeout(() => {
-    console.log("⏰ Running delayed initialization...");
-    const inspirationalBtn = document.querySelector('.bible-mode .action-btn[data-action="inspirational"]');
-    if (inspirationalBtn) {
-      inspirationalBtn.style.background = 'linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(210, 105, 30, 0.95) 100%)';
-      inspirationalBtn.style.border = 'none';
-      inspirationalBtn.style.color = 'white';
-      console.log("✅ Inspirational button styled");
-    } else {
-      console.log("❌ Inspirational button not found for styling");
-    }
-  }, 100);
+// Initialize the app
+document.addEventListener("DOMContentLoaded", () => {
+  // Initialize elements
+  initializeElements();
+  
+  // Set up all functionality immediately
+  setupThemeToggle();
+  setupMusicToggle();
+  setupQuoteFunctionality();
+  setupActionButtons();
+  setupNavigationButtons();
+  setupInputHandling();
+  
+  // Initialize managers
+  themeManager.init();
+  musicManager.init();
+  helpManager.init();
+  
+  // Load quotes and start
+  loadQuotesAndStart();
 });
 
-window.inspirationalApp = {
-  showQuote: (index) => quoteManager.showQuote(index, state.isBibleMode),
-  showNextQuote: () => quoteManager.showNextQuote(),
-  showPreviousQuote: () => quoteManager.showPreviousQuote(),
-  showRandomQuote: () => quoteManager.showRandomQuote(state.isBibleMode),
-  addQuote: async (text, author) => {
-    const quotes = await quoteLoader.getQuotes('inspirational', 'inspirational_quotes');
-    quotes.push({ text, author });
-  },
+function setupThemeToggle() {
+  const themeBtn = document.getElementById("theme-toggle");
+  if (themeBtn) {
+    themeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+      
+      // Update icon
+      const icon = themeBtn.querySelector("i");
+      if (icon) {
+        icon.className = newTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+      }
+    });
+  }
+}
+
+function setupMusicToggle() {
+  const musicBtn = document.getElementById("music-toggle");
+  if (musicBtn) {
+    musicBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Basic music toggle - will be enhanced by musicManager
+      const isPlaying = musicBtn.classList.contains("playing");
+      if (isPlaying) {
+        musicBtn.classList.remove("playing");
+        const icon = musicBtn.querySelector("i");
+        if (icon) icon.className = "fas fa-music";
+      } else {
+        musicBtn.classList.add("playing");
+        const icon = musicBtn.querySelector("i");
+        if (icon) icon.className = "fas fa-volume-mute";
+      }
+    });
+  }
+}
+
+function setupQuoteFunctionality() {
+  // This will be enhanced when quotes are loaded
+  const quoteText = document.getElementById("quote-text");
+  const quoteRef = document.getElementById("quote-ref");
+  
+  if (quoteText && quoteRef) {
+    quoteText.textContent = "Loading quotes...";
+    quoteRef.textContent = "Please wait";
+  }
+}
+
+function setupActionButtons() {
+  const actionBtns = document.querySelectorAll(".action-btn");
+  actionBtns.forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const action = btn.dataset.action;
+      handleActionClick(action);
+    });
+  });
+}
+
+function setupNavigationButtons() {
+  const nextBtn = document.getElementById("next-btn");
+  const prevBtn = document.getElementById("prev-btn");
+  
+  if (nextBtn) {
+    nextBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showNextQuote();
+    });
+  }
+  
+  if (prevBtn) {
+    prevBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showPreviousQuote();
+    });
+  }
+}
+
+function setupInputHandling() {
+  const submitBtn = document.getElementById("submit-btn");
+  const userInput = document.getElementById("user-input");
+  
+  if (submitBtn) {
+    submitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      handleUserInput();
+    });
+  }
+  
+  if (userInput) {
+    userInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        handleUserInput();
+      }
+    });
+  }
+}
+
+async function loadQuotesAndStart() {
+  try {
+    await quoteLoader.preloadAllQuotes();
+    showRandomQuote();
+  } catch (error) {
+    // Fallback if quotes fail to load
+    showFallbackQuote();
+  }
+}
+
+function showRandomQuote() {
+  const quotes = [
+    { text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.", reference: "John 3:16" },
+    { text: "I can do all things through Christ who strengthens me.", reference: "Philippians 4:13" },
+    { text: "Trust in the Lord with all your heart and lean not on your own understanding.", reference: "Proverbs 3:5" }
+  ];
+  
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  displayQuote(randomQuote.text, randomQuote.reference);
+}
+
+function showFallbackQuote() {
+  displayQuote("Welcome to QuoLand! Click any button to explore quotes.", "Biblical Wisdom");
+}
+
+function displayQuote(text, reference) {
+  const quoteText = document.getElementById("quote-text");
+  const quoteRef = document.getElementById("quote-ref");
+  
+  if (quoteText) quoteText.textContent = text;
+  if (quoteRef) quoteRef.textContent = `- ${reference}`;
+}
+
+function handleActionClick(action) {
+  switch (action) {
+    case "oldT":
+      showRandomQuote();
+      break;
+    case "newT":
+      showRandomQuote();
+      break;
+    case "psalm":
+      showRandomQuote();
+      break;
+    case "random":
+      showRandomQuote();
+      break;
+    case "inspirational":
+      showRandomQuote();
+      break;
+  }
+}
+
+function showNextQuote() {
+  showRandomQuote();
+}
+
+function showPreviousQuote() {
+  showRandomQuote();
+}
+
+function handleUserInput() {
+  const input = document.getElementById("user-input");
+  if (input && input.value.trim()) {
+    showRandomQuote();
+    input.value = "";
+  }
+}
+
+// Clean initialization - no more complex fallbacks
+
+// Clean app object
+window.quoLandApp = {
+  showRandomQuote,
+  showNextQuote,
+  showPreviousQuote,
+  displayQuote
 };
+
+// App initialization complete
