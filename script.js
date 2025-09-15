@@ -1123,7 +1123,7 @@ const eventListeners = {
         e.stopPropagation();
         console.log("📝 Submit button clicked");
         try {
-          inputProcessor.handleUserInput();
+          handleUserInput();
         } catch (error) {
           console.error("❌ Error in submit button handler:", error);
         }
@@ -1140,7 +1140,7 @@ const eventListeners = {
           e.preventDefault();
           console.log("📝 Enter key pressed in input");
           try {
-            inputProcessor.handleUserInput();
+            handleUserInput();
           } catch (error) {
             console.error("❌ Error in input handler:", error);
           }
@@ -1158,7 +1158,7 @@ const eventListeners = {
         e.stopPropagation();
         console.log("⬅️ Previous button clicked");
         try {
-          quoteManager.showPreviousQuote();
+          showPreviousQuote();
         } catch (error) {
           console.error("❌ Error in previous button handler:", error);
         }
@@ -1175,7 +1175,7 @@ const eventListeners = {
         e.stopPropagation();
         console.log("➡️ Next button clicked");
         try {
-          quoteManager.showNextQuote();
+          showNextQuote();
         } catch (error) {
           console.error("❌ Error in next button handler:", error);
         }
@@ -1194,7 +1194,7 @@ const eventListeners = {
           const action = e.target.closest(".action-btn").dataset.action;
           console.log(`🎯 Action button ${index + 1} clicked: ${action}`);
           try {
-            inputProcessor.handleQuickAction(action);
+            handleActionClick(action);
           } catch (error) {
             console.error("❌ Error in action button handler:", error);
           }
@@ -1371,194 +1371,68 @@ document.head.appendChild(style);
 // QuoLand App - Biblical Wisdom and Inspirational Quotes
 
 // Initialize the app
-document.addEventListener("DOMContentLoaded", () => {
-  // Initialize elements
-  initializeElements();
-  
-  // Set up all functionality immediately
-  setupThemeToggle();
-  setupMusicToggle();
-  setupQuoteFunctionality();
-  setupActionButtons();
-  setupNavigationButtons();
-  setupInputHandling();
-  
-  // Initialize managers
-  themeManager.init();
-  musicManager.init();
-  helpManager.init();
-  
-  // Load quotes and start
-  loadQuotesAndStart();
-});
+document.addEventListener("DOMContentLoaded", init);
 
-function setupThemeToggle() {
-  const themeBtn = document.getElementById("theme-toggle");
-  if (themeBtn) {
-    themeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
-      const newTheme = currentTheme === "light" ? "dark" : "light";
-      document.documentElement.setAttribute("data-theme", newTheme);
-      localStorage.setItem("theme", newTheme);
-      
-      // Update icon
-      const icon = themeBtn.querySelector("i");
-      if (icon) {
-        icon.className = newTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
-      }
-    });
-  }
-}
-
-function setupMusicToggle() {
-  const musicBtn = document.getElementById("music-toggle");
-  if (musicBtn) {
-    musicBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      // Basic music toggle - will be enhanced by musicManager
-      const isPlaying = musicBtn.classList.contains("playing");
-      if (isPlaying) {
-        musicBtn.classList.remove("playing");
-        const icon = musicBtn.querySelector("i");
-        if (icon) icon.className = "fas fa-music";
-      } else {
-        musicBtn.classList.add("playing");
-        const icon = musicBtn.querySelector("i");
-        if (icon) icon.className = "fas fa-volume-mute";
-      }
-    });
-  }
-}
-
-function setupQuoteFunctionality() {
-  // This will be enhanced when quotes are loaded
-  const quoteText = document.getElementById("quote-text");
-  const quoteRef = document.getElementById("quote-ref");
-  
-  if (quoteText && quoteRef) {
-    quoteText.textContent = "Loading quotes...";
-    quoteRef.textContent = "Please wait";
-  }
-}
-
-function setupActionButtons() {
-  const actionBtns = document.querySelectorAll(".action-btn");
-  actionBtns.forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const action = btn.dataset.action;
-      handleActionClick(action);
-    });
-  });
-}
-
-function setupNavigationButtons() {
-  const nextBtn = document.getElementById("next-btn");
-  const prevBtn = document.getElementById("prev-btn");
-  
-  if (nextBtn) {
-    nextBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showNextQuote();
-    });
-  }
-  
-  if (prevBtn) {
-    prevBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      showPreviousQuote();
-    });
-  }
-}
-
-function setupInputHandling() {
-  const submitBtn = document.getElementById("submit-btn");
-  const userInput = document.getElementById("user-input");
-  
-  if (submitBtn) {
-    submitBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      handleUserInput();
-    });
-  }
-  
-  if (userInput) {
-    userInput.addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        handleUserInput();
-      }
-    });
-  }
-}
-
-async function loadQuotesAndStart() {
-  try {
-    await quoteLoader.preloadAllQuotes();
-    showRandomQuote();
-  } catch (error) {
-    // Fallback if quotes fail to load
-    showFallbackQuote();
-  }
-}
-
-function showRandomQuote() {
-  const quotes = [
-    { text: "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.", reference: "John 3:16" },
-    { text: "I can do all things through Christ who strengthens me.", reference: "Philippians 4:13" },
-    { text: "Trust in the Lord with all your heart and lean not on your own understanding.", reference: "Proverbs 3:5" }
-  ];
-  
-  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-  displayQuote(randomQuote.text, randomQuote.reference);
-}
-
-function showFallbackQuote() {
-  displayQuote("Welcome to QuoLand! Click any button to explore quotes.", "Biblical Wisdom");
-}
-
-function displayQuote(text, reference) {
-  const quoteText = document.getElementById("quote-text");
-  const quoteRef = document.getElementById("quote-ref");
-  
-  if (quoteText) quoteText.textContent = text;
-  if (quoteRef) quoteRef.textContent = `- ${reference}`;
-}
+// Removed duplicate setup functions - using the main initialization system instead
 
 function handleActionClick(action) {
-  switch (action) {
-    case "oldT":
-      showRandomQuote();
-      break;
-    case "newT":
-      showRandomQuote();
-      break;
-    case "psalm":
-      showRandomQuote();
-      break;
-    case "random":
-      showRandomQuote();
-      break;
-    case "inspirational":
-      showRandomQuote();
-      break;
+  console.log("🎯 handleActionClick called with action:", action);
+  console.log("🔍 inputProcessor available:", typeof inputProcessor);
+  console.log("🔍 inputProcessor.handleQuickAction available:", typeof inputProcessor?.handleQuickAction);
+  
+  // Use the proper inputProcessor to handle actions
+  if (inputProcessor && inputProcessor.handleQuickAction) {
+    inputProcessor.handleQuickAction(action);
+  } else {
+    console.error("❌ inputProcessor not available, falling back to basic functionality");
+    // Fallback for basic functionality
+    switch (action) {
+      case "oldT":
+        quoteManager.showNextQuoteFromSection('oldTestament');
+        break;
+      case "newT":
+        quoteManager.showNextQuoteFromSection('newTestament');
+        break;
+      case "psalm":
+        quoteManager.showNextQuoteFromSection('psalms');
+        break;
+      case "random":
+        quoteManager.showRandomQuote(state.isBibleMode);
+        break;
+      case "inspirational":
+        uiManager.toggleBibleMode();
+        break;
+    }
   }
 }
 
 function showNextQuote() {
-  showRandomQuote();
+  console.log("➡️ showNextQuote called");
+  console.log("🔍 quoteManager available:", typeof quoteManager);
+  if (quoteManager && quoteManager.showNextQuote) {
+    quoteManager.showNextQuote();
+  } else {
+    console.error("❌ quoteManager not available");
+  }
 }
 
 function showPreviousQuote() {
-  showRandomQuote();
+  console.log("⬅️ showPreviousQuote called");
+  console.log("🔍 quoteManager available:", typeof quoteManager);
+  if (quoteManager && quoteManager.showPreviousQuote) {
+    quoteManager.showPreviousQuote();
+  } else {
+    console.error("❌ quoteManager not available");
+  }
 }
 
 function handleUserInput() {
-  const input = document.getElementById("user-input");
-  if (input && input.value.trim()) {
-    showRandomQuote();
-    input.value = "";
+  console.log("📝 handleUserInput called");
+  console.log("🔍 inputProcessor available:", typeof inputProcessor);
+  if (inputProcessor && inputProcessor.handleUserInput) {
+    inputProcessor.handleUserInput();
+  } else {
+    console.error("❌ inputProcessor not available");
   }
 }
 
