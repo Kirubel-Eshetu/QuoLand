@@ -1,7 +1,3 @@
-// QuoLand - Biblical Wisdom and Inspirational Quotes
-// Simplified and working version
-
-// Global state
 const state = {
   currentBiblicalIndex: 0,
   currentQuoteIndex: 0,
