@@ -6,33 +6,28 @@ const state = {
   biblicalQuoteHistory: [],
   quoteHistory: [],
   isBibleMode: true,
-  currentBiblicalSection: 'oldTestament',
-  currentInspirationalCategory: 'inspirational',
+  currentBiblicalSection: "oldTestament",
+  currentInspirationalCategory: "inspirational",
   totalBiblicalQuotesViewed: 0,
-  totalInspirationalQuotesViewed: 0
+  totalInspirationalQuotesViewed: 0,
 };
 
-// Quote data storage
 let quoteData = {
   biblical: {
     oldTestament: [],
     psalms: [],
-    newTestament: []
+    newTestament: [],
   },
   inspirational: {
     inspirational: [],
     strengthening: [],
-    focus: []
-  }
+    focus: [],
+  },
 };
 
-// DOM elements
 let elements = {};
 
-// Initialize DOM elements
 function initializeElements() {
-  console.log("🔍 Initializing DOM elements...");
-  
   elements = {
     quoteText: document.getElementById("quote-text"),
     quoteRef: document.getElementById("quote-ref"),
@@ -45,52 +40,47 @@ function initializeElements() {
     quoteCard: document.querySelector(".quote-card"),
     actionBtns: document.querySelectorAll(".action-btn"),
     themeToggle: document.getElementById("theme-toggle"),
-    musicToggle: document.getElementById("music-toggle")
+    musicToggle: document.getElementById("music-toggle"),
   };
-
-  console.log("✅ Elements initialized:", Object.keys(elements).filter(key => elements[key]));
 }
 
-// Load quote data
 async function loadQuoteData() {
   try {
-    console.log("📚 Loading quote data...");
-    
-    // Load biblical quotes
     const [oldTestament, newTestament, psalms] = await Promise.all([
-      fetch('./quote_data/biblical/old_testament.json').then(r => r.json()),
-      fetch('./quote_data/biblical/new_testament.json').then(r => r.json()),
-      fetch('./quote_data/biblical/psalms.json').then(r => r.json())
+      fetch("./quote_data/biblical/old_testament.json").then((r) => r.json()),
+      fetch("./quote_data/biblical/new_testament.json").then((r) => r.json()),
+      fetch("./quote_data/biblical/psalms.json").then((r) => r.json()),
     ]);
-    
+
     quoteData.biblical.oldTestament = oldTestament;
     quoteData.biblical.newTestament = newTestament;
     quoteData.biblical.psalms = psalms;
-    
-    // Load inspirational quotes
+
     const [inspirational, strengthening, focus] = await Promise.all([
-      fetch('./quote_data/inspirational/inspirational_quotes.json').then(r => r.json()),
-      fetch('./quote_data/inspirational/strengthening_quotes.json').then(r => r.json()),
-      fetch('./quote_data/inspirational/focus_quotes.json').then(r => r.json())
+      fetch("./quote_data/inspirational/inspirational_quotes.json").then((r) =>
+        r.json()
+      ),
+      fetch("./quote_data/inspirational/strengthening_quotes.json").then((r) =>
+        r.json()
+      ),
+      fetch("./quote_data/inspirational/focus_quotes.json").then((r) =>
+        r.json()
+      ),
     ]);
-    
+
     quoteData.inspirational.inspirational = inspirational;
     quoteData.inspirational.strengthening = strengthening;
     quoteData.inspirational.focus = focus;
-    
-    console.log("✅ Quote data loaded successfully");
   } catch (error) {
     console.error("❌ Error loading quote data:", error);
   }
 }
 
-// Display a quote
 function displayQuote(quote, reference) {
   if (elements.quoteText && elements.quoteRef) {
     elements.quoteText.textContent = quote;
     elements.quoteRef.textContent = reference;
-    
-    // Add fade effect
+
     if (elements.quoteCard) {
       elements.quoteCard.classList.add("fade-out");
       setTimeout(() => {
@@ -104,18 +94,16 @@ function displayQuote(quote, reference) {
   }
 }
 
-// Get random quote from array
 function getRandomQuote(quotes) {
   if (!quotes || quotes.length === 0) return null;
   const randomIndex = Math.floor(Math.random() * quotes.length);
   return quotes[randomIndex];
-}
+} // Stopped reading here
 
-// Show biblical quote
-function showBiblicalQuote(section = 'oldTestament') {
+function showBiblicalQuote(section = "oldTestament") {
   const quotes = quoteData.biblical[section] || [];
   const quote = getRandomQuote(quotes);
-  
+
   if (quote) {
     displayQuote(quote.text, `- ${quote.reference}`);
     state.currentBiblicalSection = section;
@@ -125,10 +113,10 @@ function showBiblicalQuote(section = 'oldTestament') {
 }
 
 // Show inspirational quote
-function showInspirationalQuote(category = 'inspirational') {
+function showInspirationalQuote(category = "inspirational") {
   const quotes = quoteData.inspirational[category] || [];
   const quote = getRandomQuote(quotes);
-  
+
   if (quote) {
     displayQuote(quote.text, `- ${quote.author}`);
     state.currentInspirationalCategory = category;
@@ -142,10 +130,10 @@ function showRandomBiblicalQuote() {
   const allQuotes = [
     ...quoteData.biblical.oldTestament,
     ...quoteData.biblical.psalms,
-    ...quoteData.biblical.newTestament
+    ...quoteData.biblical.newTestament,
   ];
   const quote = getRandomQuote(allQuotes);
-  
+
   if (quote) {
     displayQuote(quote.text, `- ${quote.reference}`);
     state.totalBiblicalQuotesViewed++;
@@ -158,10 +146,10 @@ function showRandomInspirationalQuote() {
   const allQuotes = [
     ...quoteData.inspirational.inspirational,
     ...quoteData.inspirational.strengthening,
-    ...quoteData.inspirational.focus
+    ...quoteData.inspirational.focus,
   ];
   const quote = getRandomQuote(allQuotes);
-  
+
   if (quote) {
     displayQuote(quote.text, `- ${quote.author}`);
     state.totalInspirationalQuotesViewed++;
@@ -172,25 +160,26 @@ function showRandomInspirationalQuote() {
 // Update statistics
 function updateStats() {
   if (elements.quoteCount) {
-    elements.quoteCount.textContent = state.isBibleMode ? 
-      state.totalBiblicalQuotesViewed : 
-      state.totalInspirationalQuotesViewed;
+    elements.quoteCount.textContent = state.isBibleMode
+      ? state.totalBiblicalQuotesViewed
+      : state.totalInspirationalQuotesViewed;
   }
   if (elements.currentIndex) {
-    elements.currentIndex.textContent = state.isBibleMode ? 
-      (state.currentBiblicalIndex + 1) : 
-      (state.currentQuoteIndex + 1);
+    elements.currentIndex.textContent = state.isBibleMode
+      ? state.currentBiblicalIndex + 1
+      : state.currentQuoteIndex + 1;
   }
 }
 
 // Toggle theme
 function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+  const currentTheme =
+    document.documentElement.getAttribute("data-theme") || "dark";
   const newTheme = currentTheme === "light" ? "dark" : "light";
-  
+
   document.documentElement.setAttribute("data-theme", newTheme);
   localStorage.setItem("theme", newTheme);
-  
+
   // Update theme toggle icon
   if (elements.themeToggle) {
     const icon = elements.themeToggle.querySelector("i");
@@ -198,7 +187,7 @@ function toggleTheme() {
       icon.className = newTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
     }
   }
-  
+
   console.log("🌙 Theme toggled to:", newTheme);
 }
 
@@ -211,10 +200,10 @@ function toggleMusic() {
 // Toggle between biblical and inspirational mode
 function toggleMode() {
   state.isBibleMode = !state.isBibleMode;
-  
+
   if (elements.quoteCard) {
     elements.quoteCard.classList.add("flipping");
-    
+
     setTimeout(() => {
       if (state.isBibleMode) {
         elements.quoteCard.classList.add("bible-mode");
@@ -229,35 +218,40 @@ function toggleMode() {
           "- Inspirational Speeches"
         );
       }
-      
+
       elements.quoteCard.classList.remove("flipping");
       updateStats();
     }, 300);
   }
-  
-  console.log("🔄 Mode toggled to:", state.isBibleMode ? "Biblical" : "Inspirational");
+
+  console.log(
+    "🔄 Mode toggled to:",
+    state.isBibleMode ? "Biblical" : "Inspirational"
+  );
 }
 
 // Handle user input
 function handleUserInput() {
-  const input = elements.userInput ? elements.userInput.value.trim().toLowerCase() : "";
+  const input = elements.userInput
+    ? elements.userInput.value.trim().toLowerCase()
+    : "";
   if (!input) return;
-  
+
   elements.userInput.value = "";
-  
+
   // Process input patterns
   if (input.includes("teach") || input.includes("old")) {
-    showBiblicalQuote('oldTestament');
+    showBiblicalQuote("oldTestament");
   } else if (input.includes("lead") || input.includes("psalm")) {
-    showBiblicalQuote('psalms');
+    showBiblicalQuote("psalms");
   } else if (input.includes("guide") || input.includes("new")) {
-    showBiblicalQuote('newTestament');
+    showBiblicalQuote("newTestament");
   } else if (input.includes("inspire")) {
-    showInspirationalQuote('inspirational');
+    showInspirationalQuote("inspirational");
   } else if (input.includes("strengthen") || input.includes("strength")) {
-    showInspirationalQuote('strengthening');
+    showInspirationalQuote("strengthening");
   } else if (input.includes("focus")) {
-    showInspirationalQuote('focus');
+    showInspirationalQuote("focus");
   } else if (input.includes("random")) {
     if (state.isBibleMode) {
       showRandomBiblicalQuote();
@@ -267,9 +261,9 @@ function handleUserInput() {
   } else {
     // Default action
     if (state.isBibleMode) {
-      showBiblicalQuote('oldTestament');
+      showBiblicalQuote("oldTestament");
     } else {
-      showInspirationalQuote('inspirational');
+      showInspirationalQuote("inspirational");
     }
   }
 }
@@ -277,17 +271,17 @@ function handleUserInput() {
 // Handle action button clicks
 function handleActionClick(action) {
   console.log("🎯 Action clicked:", action);
-  
+
   if (state.isBibleMode) {
     switch (action) {
       case "oldT":
-        showBiblicalQuote('oldTestament');
+        showBiblicalQuote("oldTestament");
         break;
       case "newT":
-        showBiblicalQuote('newTestament');
+        showBiblicalQuote("newTestament");
         break;
       case "psalm":
-        showBiblicalQuote('psalms');
+        showBiblicalQuote("psalms");
         break;
       case "random":
         showRandomBiblicalQuote();
@@ -299,13 +293,13 @@ function handleActionClick(action) {
   } else {
     switch (action) {
       case "oldT":
-        showInspirationalQuote('inspirational');
+        showInspirationalQuote("inspirational");
         break;
       case "newT":
-        showInspirationalQuote('strengthening');
+        showInspirationalQuote("strengthening");
         break;
       case "psalm":
-        showInspirationalQuote('focus');
+        showInspirationalQuote("focus");
         break;
       case "random":
         showRandomInspirationalQuote();
@@ -340,7 +334,7 @@ function showPreviousQuote() {
 // Set up event listeners
 function setupEventListeners() {
   console.log("🔗 Setting up event listeners...");
-  
+
   // Submit button
   if (elements.submitBtn) {
     elements.submitBtn.addEventListener("click", (e) => {
@@ -349,7 +343,7 @@ function setupEventListeners() {
       handleUserInput();
     });
   }
-  
+
   // Input field
   if (elements.userInput) {
     elements.userInput.addEventListener("keypress", (e) => {
@@ -360,7 +354,7 @@ function setupEventListeners() {
       }
     });
   }
-  
+
   // Previous button
   if (elements.prevBtn) {
     elements.prevBtn.addEventListener("click", (e) => {
@@ -369,7 +363,7 @@ function setupEventListeners() {
       showPreviousQuote();
     });
   }
-  
+
   // Next button
   if (elements.nextBtn) {
     elements.nextBtn.addEventListener("click", (e) => {
@@ -378,7 +372,7 @@ function setupEventListeners() {
       showNextQuote();
     });
   }
-  
+
   // Action buttons
   if (elements.actionBtns) {
     elements.actionBtns.forEach((btn) => {
@@ -390,7 +384,7 @@ function setupEventListeners() {
       });
     });
   }
-  
+
   // Theme toggle
   if (elements.themeToggle) {
     elements.themeToggle.addEventListener("click", (e) => {
@@ -399,7 +393,7 @@ function setupEventListeners() {
       toggleTheme();
     });
   }
-  
+
   // Music toggle
   if (elements.musicToggle) {
     elements.musicToggle.addEventListener("click", (e) => {
@@ -408,11 +402,11 @@ function setupEventListeners() {
       toggleMusic();
     });
   }
-  
+
   // Keyboard shortcuts
   document.addEventListener("keydown", (e) => {
     if (document.activeElement === elements.userInput) return;
-    
+
     switch (e.key.toLowerCase()) {
       case "arrowright":
       case " ":
@@ -445,38 +439,37 @@ function setupEventListeners() {
         break;
     }
   });
-  
+
   console.log("✅ Event listeners set up successfully");
 }
 
 // Initialize the application
 async function init() {
   console.log("🚀 Initializing QuoLand...");
-  
+
   try {
     // Initialize DOM elements
     initializeElements();
-    
+
     // Load quote data
     await loadQuoteData();
-    
+
     // Set up event listeners
     setupEventListeners();
-    
+
     // Initialize theme
     const savedTheme = localStorage.getItem("theme") || "dark";
     document.documentElement.setAttribute("data-theme", savedTheme);
-    
+
     // Set initial quote
     if (elements.quoteCard) {
       elements.quoteCard.classList.add("bible-mode");
     }
-    
+
     // Update stats
     updateStats();
-    
+
     console.log("✅ QuoLand initialized successfully!");
-    
   } catch (error) {
     console.error("❌ Error initializing QuoLand:", error);
   }
@@ -492,15 +485,25 @@ window.toggleMusic = toggleMusic;
 window.toggleMode = toggleMode;
 
 // Test function
-window.testButtons = function() {
+window.testButtons = function () {
   console.log("🧪 Testing button functionality...");
-  console.log("Elements found:", Object.keys(elements).filter(key => elements[key]));
-  console.log("Quote data loaded:", Object.keys(quoteData.biblical).length + Object.keys(quoteData.inspirational).length);
-  console.log("Current mode:", state.isBibleMode ? "Biblical" : "Inspirational");
+  console.log(
+    "Elements found:",
+    Object.keys(elements).filter((key) => elements[key])
+  );
+  console.log(
+    "Quote data loaded:",
+    Object.keys(quoteData.biblical).length +
+      Object.keys(quoteData.inspirational).length
+  );
+  console.log(
+    "Current mode:",
+    state.isBibleMode ? "Biblical" : "Inspirational"
+  );
 };
 
 // Initialize when DOM is ready
-if (document.readyState === 'loading') {
+if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);
 } else {
   init();
