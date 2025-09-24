@@ -106,6 +106,61 @@ body {
   align-items: center;
 }
 
+.music-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 142px; /* reserve space: prev(42) + 8 + toggle(50) + 8 + next(42) */
+}
+
+.music-nav {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Only reveal prev/next on hover when music is playing */
+.music-wrap.playing:hover .music-nav {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.music-nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.music-nav.prev {
+  margin-right: 8px;
+}
+
+.music-nav.next {
+  margin-left: 8px;
+}
+
+/* Slide left when playing to make room for next button */
+.music-toggle.playing {
+  transform: translateX(-4px);
+}
+
+/* When not playing, keep layout but hide both nav buttons */
+.music-wrap:not(.playing) .music-nav.prev,
+.music-wrap:not(.playing) .music-nav.next {
+  visibility: hidden;
+}
+
 .music-toggle {
   background: rgba(255, 255, 255, 0.2);
   border: none;
@@ -286,6 +341,11 @@ body {
 .quote-card.bible-mode.fade-in {
   opacity: 1;
   transform: translateY(0) rotateY(180deg);
+}
+
+.quote-card.copied {
+  box-shadow: 0 0 0 3px var(--gold), 0 20px 40px var(--shadow);
+  transform: translateY(-3px);
 }
 
 .controls {

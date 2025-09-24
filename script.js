@@ -27,6 +27,151 @@ let quoteData = {
 
 let elements = {};
 
+const musicState = {
+  audioEl: null,
+  isInitialized: false,
+  isPlaying: false,
+  currentPlaylistKey: "biblical",
+  currentTrackIndex: 0,
+  playlists: {
+    biblical: [
+      "./music/biblical/Biblical_Song_1.mp3",
+      "./music/biblical/Biblical_Song_2.mp3",
+      "./music/biblical/Biblical_Song_3.mp3",
+      "./music/biblical/Biblical_Song_4.mp3",
+      "./music/biblical/Biblical_Song_5.mp3",
+      "./music/biblical/Biblical_Song_6.m4a",
+      "./music/biblical/Biblical_Song_7.mp3",
+      "./music/biblical/Biblical_Song_8.m4a",
+      "./music/biblical/Biblical_Song_9.m4a",
+      "./music/biblical/Biblical_Song_10.m4a",
+    ],
+    inspirational: [
+      "./music/inspirational/inspiration_music_1.mp3",
+      "./music/inspirational/inspiration_music_2.m4a",
+      "./music/inspirational/inspiration_music_3.m4a",
+      "./music/inspirational/inspiration_music_4.m4a",
+      "./music/inspirational/inspiration_music_5.m4a",
+      "./music/inspirational/inspiration_music_6.m4a",
+      "./music/inspirational/inspiration_music_7.m4a",
+      "./music/inspirational/inspiration_music_8.m4a",
+      "./music/inspirational/inspiration_music_9.m4a",
+      "./music/inspirational/inspiration_music_10.m4a",
+    ],
+  },
+};
+
+function getCurrentPlaylistKey() {
+  return state.isBibleMode ? "biblical" : "inspirational";
+}
+
+function initializeMusicPlayer() {
+  if (musicState.isInitialized) return;
+  const audio = document.createElement("audio");
+  audio.preload = "metadata";
+  audio.volume = 0.35;
+  audio.setAttribute("aria-hidden", "true");
+  audio.style.display = "none";
+
+  audio.addEventListener("ended", () => {
+    playNextTrack();
+  });
+
+  document.body.appendChild(audio);
+  musicState.audioEl = audio;
+  musicState.isInitialized = true;
+  musicState.currentPlaylistKey = getCurrentPlaylistKey();
+  musicState.currentTrackIndex = 0;
+  // Ensure CSS state sync
+  if (elements.musicWrap) {
+    elements.musicWrap.classList.toggle("playing", musicState.isPlaying);
+  }
+}
+
+function loadCurrentTrack() {
+  const key = musicState.currentPlaylistKey;
+  const playlist = musicState.playlists[key] || [];
+  if (!musicState.audioEl || playlist.length === 0) return false;
+  // Guard index
+  if (musicState.currentTrackIndex < 0 || musicState.currentTrackIndex >= playlist.length) {
+    musicState.currentTrackIndex = 0;
+  }
+  musicState.audioEl.src = playlist[musicState.currentTrackIndex];
+  return true;
+}
+
+function playCurrentTrack() {
+  if (!loadCurrentTrack()) return;
+  musicState.audioEl
+    .play()
+    .then(() => {
+      musicState.isPlaying = true;
+      if (elements.musicToggle) {
+        elements.musicToggle.classList.add("playing");
+        const icon = elements.musicToggle.querySelector("i");
+        if (icon) icon.className = "fas fa-pause";
+      }
+      if (elements.musicWrap) {
+        elements.musicWrap.classList.add("playing");
+      }
+    })
+    .catch((err) => {
+      console.warn("Unable to autoplay music:", err);
+    });
+}
+
+function pauseMusic() {
+  if (!musicState.audioEl) return;
+  musicState.audioEl.pause();
+  musicState.isPlaying = false;
+  if (elements.musicToggle) {
+    elements.musicToggle.classList.remove("playing");
+    const icon = elements.musicToggle.querySelector("i");
+    if (icon) icon.className = "fas fa-music";
+  }
+  if (elements.musicWrap) {
+    elements.musicWrap.classList.remove("playing");
+  }
+}
+
+function playNextTrack() {
+  const key = musicState.currentPlaylistKey;
+  const playlist = musicState.playlists[key] || [];
+  if (playlist.length === 0) return;
+  musicState.currentTrackIndex = (musicState.currentTrackIndex + 1) % playlist.length;
+  if (musicState.isPlaying) {
+    playCurrentTrack();
+  } else {
+    loadCurrentTrack();
+  }
+}
+
+function switchPlaylistIfNeeded() {
+  const desiredKey = getCurrentPlaylistKey();
+  if (musicState.currentPlaylistKey !== desiredKey) {
+    musicState.currentPlaylistKey = desiredKey;
+    // Start from a deterministic but different index to vary mood
+    musicState.currentTrackIndex = 0;
+    if (musicState.isPlaying) {
+      playCurrentTrack();
+    } else {
+      loadCurrentTrack();
+    }
+  }
+}
+
+function toggleMusic() {
+  console.log("🎵 Music toggle clicked");
+  initializeMusicPlayer();
+  switchPlaylistIfNeeded();
+
+  if (!musicState.isPlaying) {
+    playCurrentTrack();
+  } else {
+    pauseMusic();
+  }
+}
+
 function initializeElements() {
   elements = {
     quoteText: document.getElementById("quote-text"),
@@ -41,6 +186,9 @@ function initializeElements() {
     actionBtns: document.querySelectorAll(".action-btn"),
     themeToggle: document.getElementById("theme-toggle"),
     musicToggle: document.getElementById("music-toggle"),
+    musicPrev: document.getElementById("music-prev"),
+    musicNext: document.getElementById("music-next"),
+    musicWrap: document.getElementById("music-wrap"),
   };
 }
 
@@ -52,9 +200,18 @@ async function loadQuoteData() {
       fetch("./quote_data/biblical/psalms.json").then((r) => r.json()),
     ]);
 
-    quoteData.biblical.oldTestament = oldTestament;
-    quoteData.biblical.newTestament = newTestament;
-    quoteData.biblical.psalms = psalms;
+    // Normalize biblical quotes
+    const normalizeBiblical = (arr) =>
+      (arr || [])
+        .filter((q) => q && typeof q.text === "string")
+        .map((q) => ({
+          text: String(q.text).trim(),
+          reference: String(q.reference || "").trim(),
+        }));
+
+    quoteData.biblical.oldTestament = normalizeBiblical(oldTestament);
+    quoteData.biblical.newTestament = normalizeBiblical(newTestament);
+    quoteData.biblical.psalms = normalizeBiblical(psalms);
 
     const [inspirational, strengthening, focus] = await Promise.all([
       fetch("./quote_data/inspirational/inspirational_quotes.json").then((r) =>
@@ -68,9 +225,18 @@ async function loadQuoteData() {
       ),
     ]);
 
-    quoteData.inspirational.inspirational = inspirational;
-    quoteData.inspirational.strengthening = strengthening;
-    quoteData.inspirational.focus = focus;
+    // Normalize inspirational quotes (fix occasional "reference" field and trim)
+    const normalizeInspirational = (arr) =>
+      (arr || [])
+        .filter((q) => q && typeof q.text === "string")
+        .map((q) => ({
+          text: String(q.text).trim(),
+          author: String(q.author || q.reference || "Unknown").trim() || "Unknown",
+        }));
+
+    quoteData.inspirational.inspirational = normalizeInspirational(inspirational);
+    quoteData.inspirational.strengthening = normalizeInspirational(strengthening);
+    quoteData.inspirational.focus = normalizeInspirational(focus);
   } catch (error) {
     console.error("❌ Error loading quote data:", error);
   }
@@ -94,11 +260,111 @@ function displayQuote(quote, reference) {
   }
 }
 
+// Copy current quote to clipboard
+function copyCurrentQuoteToClipboard() {
+  const textEl = elements.quoteText;
+  const refEl = elements.quoteRef;
+  if (!textEl || !refEl) return;
+
+  const payload = `${textEl.textContent} ${refEl.textContent}`.trim();
+  const showCopied = () => {
+    if (!elements.quoteCard) return;
+    elements.quoteCard.classList.add("copied");
+    setTimeout(() => elements.quoteCard && elements.quoteCard.classList.remove("copied"), 1200);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(payload)
+      .then(showCopied)
+      .catch(() => {
+        // Fallback
+        const ta = document.createElement("textarea");
+        ta.value = payload;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          showCopied();
+        } catch (e) {
+          console.warn("Clipboard copy failed", e);
+        } finally {
+          document.body.removeChild(ta);
+        }
+      });
+  } else {
+    // Legacy fallback
+    const ta = document.createElement("textarea");
+    ta.value = payload;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      showCopied();
+    } catch (e) {
+      console.warn("Clipboard copy failed", e);
+    } finally {
+      document.body.removeChild(ta);
+    }
+  }
+}
+
 function getRandomQuote(quotes) {
   if (!quotes || quotes.length === 0) return null;
   const randomIndex = Math.floor(Math.random() * quotes.length);
   return quotes[randomIndex];
-} // Stopped reading here
+}
+
+function updateNavButtons() {
+  if (!elements.prevBtn) return;
+  const isBible = state.isBibleMode;
+  const canGoPrev = isBible
+    ? state.currentBiblicalIndex > 0
+    : state.currentQuoteIndex > 0;
+  elements.prevBtn.disabled = !canGoPrev;
+}
+
+function displayFromBiblicalHistory(index) {
+  const entry = state.biblicalQuoteHistory[index];
+  if (!entry) return;
+  displayQuote(entry.text, `- ${entry.reference}`);
+  state.currentBiblicalSection = entry.section;
+  updateStats();
+  updateNavButtons();
+}
+
+function displayFromInspirationalHistory(index) {
+  const entry = state.quoteHistory[index];
+  if (!entry) return;
+  displayQuote(entry.text, `- ${entry.author}`);
+  state.currentInspirationalCategory = entry.category;
+  updateStats();
+  updateNavButtons();
+}
+
+function pushBiblicalHistory(quoteObj, section) {
+  if (!quoteObj) return;
+  state.biblicalQuoteHistory.push({
+    text: quoteObj.text,
+    reference: quoteObj.reference || "",
+    section,
+  });
+  state.currentBiblicalIndex = state.biblicalQuoteHistory.length - 1;
+}
+
+function pushInspirationalHistory(quoteObj, category) {
+  if (!quoteObj) return;
+  state.quoteHistory.push({
+    text: quoteObj.text,
+    author: quoteObj.author || "Unknown",
+    category,
+  });
+  state.currentQuoteIndex = state.quoteHistory.length - 1;
+}
 
 function showBiblicalQuote(section = "oldTestament") {
   const quotes = quoteData.biblical[section] || [];
@@ -108,7 +374,9 @@ function showBiblicalQuote(section = "oldTestament") {
     displayQuote(quote.text, `- ${quote.reference}`);
     state.currentBiblicalSection = section;
     state.totalBiblicalQuotesViewed++;
+    pushBiblicalHistory(quote, section);
     updateStats();
+    updateNavButtons();
   }
 }
 
@@ -121,7 +389,9 @@ function showInspirationalQuote(category = "inspirational") {
     displayQuote(quote.text, `- ${quote.author}`);
     state.currentInspirationalCategory = category;
     state.totalInspirationalQuotesViewed++;
+    pushInspirationalHistory(quote, category);
     updateStats();
+    updateNavButtons();
   }
 }
 
@@ -136,8 +406,11 @@ function showRandomBiblicalQuote() {
 
   if (quote) {
     displayQuote(quote.text, `- ${quote.reference}`);
+    // Keep section as current section context
     state.totalBiblicalQuotesViewed++;
+    pushBiblicalHistory(quote, state.currentBiblicalSection);
     updateStats();
+    updateNavButtons();
   }
 }
 
@@ -153,7 +426,9 @@ function showRandomInspirationalQuote() {
   if (quote) {
     displayQuote(quote.text, `- ${quote.author}`);
     state.totalInspirationalQuotesViewed++;
+    pushInspirationalHistory(quote, state.currentInspirationalCategory);
     updateStats();
+    updateNavButtons();
   }
 }
 
@@ -191,13 +466,7 @@ function toggleTheme() {
   console.log("🌙 Theme toggled to:", newTheme);
 }
 
-// Toggle music (placeholder)
-function toggleMusic() {
-  console.log("🎵 Music toggle clicked");
-  // Music functionality can be added here
-}
-
-// Toggle between biblical and inspirational mode
+// Toggle mode
 function toggleMode() {
   state.isBibleMode = !state.isBibleMode;
 
@@ -221,6 +490,12 @@ function toggleMode() {
 
       elements.quoteCard.classList.remove("flipping");
       updateStats();
+      updateNavButtons(); // Update nav buttons after mode change
+
+      // If music is initialized, auto-switch playlist to match the new mode
+      if (musicState.isInitialized) {
+        switchPlaylistIfNeeded();
+      }
     }, 300);
   }
 
@@ -314,20 +589,38 @@ function handleActionClick(action) {
 // Show next quote
 function showNextQuote() {
   if (state.isBibleMode) {
-    showBiblicalQuote(state.currentBiblicalSection);
+    const atHistoryEnd =
+      state.currentBiblicalIndex >= state.biblicalQuoteHistory.length - 1;
+    if (atHistoryEnd) {
+      // fetch a new one in the current section
+      showBiblicalQuote(state.currentBiblicalSection);
+    } else {
+      state.currentBiblicalIndex += 1;
+      displayFromBiblicalHistory(state.currentBiblicalIndex);
+    }
   } else {
-    showInspirationalQuote(state.currentInspirationalCategory);
+    const atHistoryEnd = state.currentQuoteIndex >= state.quoteHistory.length - 1;
+    if (atHistoryEnd) {
+      showInspirationalQuote(state.currentInspirationalCategory);
+    } else {
+      state.currentQuoteIndex += 1;
+      displayFromInspirationalHistory(state.currentQuoteIndex);
+    }
   }
 }
 
-// Show previous quote (placeholder - could implement history)
+// Show previous quote (history-based)
 function showPreviousQuote() {
-  console.log("⬅️ Previous quote clicked");
-  // For now, just show a random quote
   if (state.isBibleMode) {
-    showRandomBiblicalQuote();
+    if (state.currentBiblicalIndex > 0) {
+      state.currentBiblicalIndex -= 1;
+      displayFromBiblicalHistory(state.currentBiblicalIndex);
+    }
   } else {
-    showRandomInspirationalQuote();
+    if (state.currentQuoteIndex > 0) {
+      state.currentQuoteIndex -= 1;
+      displayFromInspirationalHistory(state.currentQuoteIndex);
+    }
   }
 }
 
@@ -403,6 +696,37 @@ function setupEventListeners() {
     });
   }
 
+  // Music prev/next
+  if (elements.musicPrev) {
+    elements.musicPrev.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (!musicState.isInitialized) initializeMusicPlayer();
+      const key = musicState.currentPlaylistKey;
+      const list = musicState.playlists[key] || [];
+      if (list.length === 0) return;
+      musicState.currentTrackIndex =
+        (musicState.currentTrackIndex - 1 + list.length) % list.length;
+      if (musicState.isPlaying) {
+        playCurrentTrack();
+      } else {
+        loadCurrentTrack();
+      }
+    });
+  }
+  if (elements.musicNext) {
+    elements.musicNext.addEventListener("click", (e) => {
+      e.preventDefault();
+      playNextTrack();
+    });
+  }
+
+  // Double-click to copy quote
+  if (elements.quoteCard) {
+    elements.quoteCard.addEventListener("dblclick", () => {
+      copyCurrentQuoteToClipboard();
+    });
+  }
+
   // Keyboard shortcuts
   document.addEventListener("keydown", (e) => {
     if (document.activeElement === elements.userInput) return;
@@ -437,6 +761,35 @@ function setupEventListeners() {
         e.preventDefault();
         toggleMode();
         break;
+      case "c":
+        // Quick copy
+        e.preventDefault();
+        copyCurrentQuoteToClipboard();
+        break;
+      case ">":
+        // Shift+.
+        if (e.shiftKey) {
+          e.preventDefault();
+          playNextTrack();
+        }
+        break;
+      case "<":
+        // Shift+,
+        if (e.shiftKey) {
+          e.preventDefault();
+          if (!musicState.isInitialized) initializeMusicPlayer();
+          const key = musicState.currentPlaylistKey;
+          const list = musicState.playlists[key] || [];
+          if (list.length === 0) return;
+          musicState.currentTrackIndex =
+            (musicState.currentTrackIndex - 1 + list.length) % list.length;
+          if (musicState.isPlaying) {
+            playCurrentTrack();
+          } else {
+            loadCurrentTrack();
+          }
+        }
+        break;
     }
   });
 
@@ -466,8 +819,9 @@ async function init() {
       elements.quoteCard.classList.add("bible-mode");
     }
 
-    // Update stats
+    // Update stats and nav state
     updateStats();
+    updateNavButtons();
 
     console.log("✅ QuoLand initialized successfully!");
   } catch (error) {
