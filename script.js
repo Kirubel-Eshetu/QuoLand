@@ -10,6 +10,17 @@ const state = {
   currentInspirationalCategory: "inspirational",
   totalBiblicalQuotesViewed: 0,
   totalInspirationalQuotesViewed: 0,
+  // Sequential indices for each section/category
+  biblicalSequentialIndex: {
+    oldTestament: 0,
+    newTestament: 0,
+    psalms: 0
+  },
+  inspirationalSequentialIndex: {
+    inspirational: 0,
+    strengthening: 0,
+    focus: 0
+  }
 };
 
 let quoteData = {
@@ -319,6 +330,12 @@ function getRandomQuote(quotes) {
   return quotes[randomIndex];
 }
 
+function getSequentialQuote(quotes, currentIndex) {
+  if (!quotes || quotes.length === 0) return null;
+  const index = currentIndex % quotes.length;
+  return quotes[index];
+}
+
 function updateNavButtons() {
   if (!elements.prevBtn) return;
   const isBible = state.isBibleMode;
@@ -368,13 +385,18 @@ function pushInspirationalHistory(quoteObj, category) {
 
 function showBiblicalQuote(section = "oldTestament") {
   const quotes = quoteData.biblical[section] || [];
-  const quote = getRandomQuote(quotes);
+  const currentIndex = state.biblicalSequentialIndex[section];
+  const quote = getSequentialQuote(quotes, currentIndex);
 
   if (quote) {
     displayQuote(quote.text, `- ${quote.reference}`);
     state.currentBiblicalSection = section;
     state.totalBiblicalQuotesViewed++;
     pushBiblicalHistory(quote, section);
+    
+    // Increment the sequential index for this section
+    state.biblicalSequentialIndex[section]++;
+    
     updateStats();
     updateNavButtons();
   }
@@ -383,13 +405,18 @@ function showBiblicalQuote(section = "oldTestament") {
 // Show inspirational quote
 function showInspirationalQuote(category = "inspirational") {
   const quotes = quoteData.inspirational[category] || [];
-  const quote = getRandomQuote(quotes);
+  const currentIndex = state.inspirationalSequentialIndex[category];
+  const quote = getSequentialQuote(quotes, currentIndex);
 
   if (quote) {
     displayQuote(quote.text, `- ${quote.author}`);
     state.currentInspirationalCategory = category;
     state.totalInspirationalQuotesViewed++;
     pushInspirationalHistory(quote, category);
+    
+    // Increment the sequential index for this category
+    state.inspirationalSequentialIndex[category]++;
+    
     updateStats();
     updateNavButtons();
   }
@@ -440,9 +467,15 @@ function updateStats() {
       : state.totalInspirationalQuotesViewed;
   }
   if (elements.currentIndex) {
-    elements.currentIndex.textContent = state.isBibleMode
-      ? state.currentBiblicalIndex + 1
-      : state.currentQuoteIndex + 1;
+    if (state.isBibleMode) {
+      // Show current position within the current biblical section
+      const currentSectionIndex = state.biblicalSequentialIndex[state.currentBiblicalSection];
+      elements.currentIndex.textContent = currentSectionIndex;
+    } else {
+      // Show current position within the current inspirational category
+      const currentCategoryIndex = state.inspirationalSequentialIndex[state.currentInspirationalCategory];
+      elements.currentIndex.textContent = currentCategoryIndex;
+    }
   }
 }
 
@@ -466,9 +499,73 @@ function toggleTheme() {
   console.log("🌙 Theme toggled to:", newTheme);
 }
 
+// Update the mode toggle button text
+function updateModeButtonText() {
+  const inspirationalBtn = document.querySelector('[data-action="inspirational"]');
+  if (inspirationalBtn) {
+    if (state.isBibleMode) {
+      // In biblical mode, show "Inspirational Mode" with fire icon
+      inspirationalBtn.innerHTML = '<i class="fas fa-fire" aria-hidden="true"></i> Inspirational Mode';
+      inspirationalBtn.setAttribute('aria-label', 'Switch to inspirational quotes');
+    } else {
+      // In inspirational mode, show "Biblical Mode" with cross icon
+      inspirationalBtn.innerHTML = '<i class="fas fa-cross" aria-hidden="true"></i> Biblical Mode';
+      inspirationalBtn.setAttribute('aria-label', 'Switch to biblical quotes');
+    }
+  }
+}
+
+// Update action buttons based on current mode
+function updateActionButtons() {
+  const oldTBtn = document.querySelector('[data-action="oldT"]');
+  const newTBtn = document.querySelector('[data-action="newT"]');
+  const psalmBtn = document.querySelector('[data-action="psalm"]');
+  const userInput = document.getElementById('user-input');
+
+  if (state.isBibleMode) {
+    // Biblical mode buttons
+    if (oldTBtn) {
+      oldTBtn.innerHTML = '<i class="fas fa-scroll" aria-hidden="true"></i> Old Testament';
+      oldTBtn.setAttribute('aria-label', 'Old Testament quotes');
+    }
+    if (newTBtn) {
+      newTBtn.innerHTML = '<i class="fas fa-book-open" aria-hidden="true"></i> New Testament';
+      newTBtn.setAttribute('aria-label', 'New Testament quotes');
+    }
+    if (psalmBtn) {
+      psalmBtn.innerHTML = '<i class="fas fa-music" aria-hidden="true"></i> Psalms';
+      psalmBtn.setAttribute('aria-label', 'Psalms quotes');
+    }
+    if (userInput) {
+      userInput.placeholder = "Type 'teach me', 'lead me' or 'guide me'...";
+    }
+  } else {
+    // Inspirational mode buttons
+    if (oldTBtn) {
+      oldTBtn.innerHTML = '<i class="fas fa-fire" aria-hidden="true"></i> Inspire Me';
+      oldTBtn.setAttribute('aria-label', 'Inspirational quotes');
+    }
+    if (newTBtn) {
+      newTBtn.innerHTML = '<i class="fas fa-dumbbell" aria-hidden="true"></i> Give Me Strength';
+      newTBtn.setAttribute('aria-label', 'Strengthening quotes');
+    }
+    if (psalmBtn) {
+      psalmBtn.innerHTML = '<i class="fas fa-crosshairs" aria-hidden="true"></i> Help Me Focus';
+      psalmBtn.setAttribute('aria-label', 'Focus quotes');
+    }
+    if (userInput) {
+      userInput.placeholder = "Type 'inspire me', 'give me strength' or 'help me focus'...";
+    }
+  }
+}
+
 // Toggle mode
 function toggleMode() {
   state.isBibleMode = !state.isBibleMode;
+
+  // Update the button text and icon
+  updateModeButtonText();
+  updateActionButtons();
 
   if (elements.quoteCard) {
     elements.quoteCard.classList.add("flipping");
@@ -822,6 +919,10 @@ async function init() {
     // Update stats and nav state
     updateStats();
     updateNavButtons();
+    
+    // Initialize the mode button text and action buttons
+    updateModeButtonText();
+    updateActionButtons();
 
     console.log("✅ QuoLand initialized successfully!");
   } catch (error) {
