@@ -580,7 +580,7 @@ function toggleMode() {
       } else {
         elements.quoteCard.classList.remove("bible-mode");
         displayQuote(
-          "Click 'Inspire Me', 'Give Me Strength', 'Help Me Focus' or type your request to find your daily dose of inspiration.",
+          "👆🏾 Click 'Inspire Me' or type your request to find your daily dose of inspiration 💪🏾",
           "- Inspirational Speeches"
         );
       }
