@@ -10,7 +10,7 @@ const state = {
   currentInspirationalCategory: "inspirational",
   totalBiblicalQuotesViewed: 0,
   totalInspirationalQuotesViewed: 0,
-  // Sequential indices for each section/category
+ 
   biblicalSequentialIndex: {
     oldTestament: 0,
     newTestament: 0,
@@ -103,7 +103,7 @@ function loadCurrentTrack() {
   const key = musicState.currentPlaylistKey;
   const playlist = musicState.playlists[key] || [];
   if (!musicState.audioEl || playlist.length === 0) return false;
-  // Guard index
+
   if (musicState.currentTrackIndex < 0 || musicState.currentTrackIndex >= playlist.length) {
     musicState.currentTrackIndex = 0;
   }
@@ -161,7 +161,7 @@ function switchPlaylistIfNeeded() {
   const desiredKey = getCurrentPlaylistKey();
   if (musicState.currentPlaylistKey !== desiredKey) {
     musicState.currentPlaylistKey = desiredKey;
-    // Start from a deterministic but different index to vary mood
+    
     musicState.currentTrackIndex = 0;
     if (musicState.isPlaying) {
       playCurrentTrack();
@@ -236,7 +236,6 @@ async function loadQuoteData() {
       ),
     ]);
 
-    // Normalize inspirational quotes (fix occasional "reference" field and trim)
     const normalizeInspirational = (arr) =>
       (arr || [])
         .filter((q) => q && typeof q.text === "string")
@@ -271,7 +270,6 @@ function displayQuote(quote, reference) {
   }
 }
 
-// Copy current quote to clipboard
 function copyCurrentQuoteToClipboard() {
   const textEl = elements.quoteText;
   const refEl = elements.quoteRef;
@@ -289,7 +287,7 @@ function copyCurrentQuoteToClipboard() {
       .writeText(payload)
       .then(showCopied)
       .catch(() => {
-        // Fallback
+        
         const ta = document.createElement("textarea");
         ta.value = payload;
         ta.style.position = "fixed";
@@ -306,7 +304,7 @@ function copyCurrentQuoteToClipboard() {
         }
       });
   } else {
-    // Legacy fallback
+  
     const ta = document.createElement("textarea");
     ta.value = payload;
     ta.style.position = "fixed";
@@ -394,7 +392,7 @@ function showBiblicalQuote(section = "oldTestament") {
     state.totalBiblicalQuotesViewed++;
     pushBiblicalHistory(quote, section);
     
-    // Increment the sequential index for this section
+    
     state.biblicalSequentialIndex[section]++;
     
     updateStats();
@@ -402,7 +400,7 @@ function showBiblicalQuote(section = "oldTestament") {
   }
 }
 
-// Show inspirational quote
+
 function showInspirationalQuote(category = "inspirational") {
   const quotes = quoteData.inspirational[category] || [];
   const currentIndex = state.inspirationalSequentialIndex[category];
@@ -414,7 +412,6 @@ function showInspirationalQuote(category = "inspirational") {
     state.totalInspirationalQuotesViewed++;
     pushInspirationalHistory(quote, category);
     
-    // Increment the sequential index for this category
     state.inspirationalSequentialIndex[category]++;
     
     updateStats();
@@ -422,7 +419,6 @@ function showInspirationalQuote(category = "inspirational") {
   }
 }
 
-// Show random quote from all biblical
 function showRandomBiblicalQuote() {
   const allQuotes = [
     ...quoteData.biblical.oldTestament,
@@ -433,7 +429,7 @@ function showRandomBiblicalQuote() {
 
   if (quote) {
     displayQuote(quote.text, `- ${quote.reference}`);
-    // Keep section as current section context
+  
     state.totalBiblicalQuotesViewed++;
     pushBiblicalHistory(quote, state.currentBiblicalSection);
     updateStats();
@@ -441,7 +437,6 @@ function showRandomBiblicalQuote() {
   }
 }
 
-// Show random quote from all inspirational
 function showRandomInspirationalQuote() {
   const allQuotes = [
     ...quoteData.inspirational.inspirational,
@@ -459,7 +454,6 @@ function showRandomInspirationalQuote() {
   }
 }
 
-// Update statistics
 function updateStats() {
   if (elements.quoteCount) {
     elements.quoteCount.textContent = state.isBibleMode
@@ -468,18 +462,18 @@ function updateStats() {
   }
   if (elements.currentIndex) {
     if (state.isBibleMode) {
-      // Show current position within the current biblical section
+     
       const currentSectionIndex = state.biblicalSequentialIndex[state.currentBiblicalSection];
       elements.currentIndex.textContent = currentSectionIndex;
     } else {
-      // Show current position within the current inspirational category
+      
       const currentCategoryIndex = state.inspirationalSequentialIndex[state.currentInspirationalCategory];
       elements.currentIndex.textContent = currentCategoryIndex;
     }
   }
 }
 
-// Toggle theme
+
 function toggleTheme() {
   const currentTheme =
     document.documentElement.getAttribute("data-theme") || "dark";
@@ -488,7 +482,7 @@ function toggleTheme() {
   document.documentElement.setAttribute("data-theme", newTheme);
   localStorage.setItem("theme", newTheme);
 
-  // Update theme toggle icon
+  
   if (elements.themeToggle) {
     const icon = elements.themeToggle.querySelector("i");
     if (icon) {
@@ -499,23 +493,22 @@ function toggleTheme() {
   console.log("🌙 Theme toggled to:", newTheme);
 }
 
-// Update the mode toggle button text
+
 function updateModeButtonText() {
   const inspirationalBtn = document.querySelector('[data-action="inspirational"]');
   if (inspirationalBtn) {
     if (state.isBibleMode) {
-      // In biblical mode, show "Inspirational Mode" with fire icon
+      
       inspirationalBtn.innerHTML = '<i class="fas fa-fire" aria-hidden="true"></i> Inspirational Mode';
       inspirationalBtn.setAttribute('aria-label', 'Switch to inspirational quotes');
     } else {
-      // In inspirational mode, show "Biblical Mode" with cross icon
+      
       inspirationalBtn.innerHTML = '<i class="fas fa-cross" aria-hidden="true"></i> Biblical Mode';
       inspirationalBtn.setAttribute('aria-label', 'Switch to biblical quotes');
     }
   }
 }
 
-// Update action buttons based on current mode
 function updateActionButtons() {
   const oldTBtn = document.querySelector('[data-action="oldT"]');
   const newTBtn = document.querySelector('[data-action="newT"]');
@@ -523,7 +516,7 @@ function updateActionButtons() {
   const userInput = document.getElementById('user-input');
 
   if (state.isBibleMode) {
-    // Biblical mode buttons
+   
     if (oldTBtn) {
       oldTBtn.innerHTML = '<i class="fas fa-scroll" aria-hidden="true"></i> Old Testament';
       oldTBtn.setAttribute('aria-label', 'Old Testament quotes');
@@ -540,7 +533,6 @@ function updateActionButtons() {
       userInput.placeholder = "Type 'teach me', 'lead me' or 'guide me'...";
     }
   } else {
-    // Inspirational mode buttons
     if (oldTBtn) {
       oldTBtn.innerHTML = '<i class="fas fa-fire" aria-hidden="true"></i> Inspire Me';
       oldTBtn.setAttribute('aria-label', 'Inspirational quotes');
@@ -559,11 +551,9 @@ function updateActionButtons() {
   }
 }
 
-// Toggle mode
 function toggleMode() {
   state.isBibleMode = !state.isBibleMode;
 
-  // Update the button text and icon
   updateModeButtonText();
   updateActionButtons();
 
@@ -587,9 +577,8 @@ function toggleMode() {
 
       elements.quoteCard.classList.remove("flipping");
       updateStats();
-      updateNavButtons(); // Update nav buttons after mode change
+      updateNavButtons(); 
 
-      // If music is initialized, auto-switch playlist to match the new mode
       if (musicState.isInitialized) {
         switchPlaylistIfNeeded();
       }
@@ -602,7 +591,6 @@ function toggleMode() {
   );
 }
 
-// Handle user input
 function handleUserInput() {
   const input = elements.userInput
     ? elements.userInput.value.trim().toLowerCase()
@@ -611,7 +599,6 @@ function handleUserInput() {
 
   elements.userInput.value = "";
 
-  // Process input patterns
   if (input.includes("teach") || input.includes("old")) {
     showBiblicalQuote("oldTestament");
   } else if (input.includes("lead") || input.includes("psalm")) {
@@ -631,7 +618,7 @@ function handleUserInput() {
       showRandomInspirationalQuote();
     }
   } else {
-    // Default action
+  
     if (state.isBibleMode) {
       showBiblicalQuote("oldTestament");
     } else {
@@ -640,7 +627,6 @@ function handleUserInput() {
   }
 }
 
-// Handle action button clicks
 function handleActionClick(action) {
   console.log("🎯 Action clicked:", action);
 
@@ -683,13 +669,12 @@ function handleActionClick(action) {
   }
 }
 
-// Show next quote
 function showNextQuote() {
   if (state.isBibleMode) {
     const atHistoryEnd =
       state.currentBiblicalIndex >= state.biblicalQuoteHistory.length - 1;
     if (atHistoryEnd) {
-      // fetch a new one in the current section
+    
       showBiblicalQuote(state.currentBiblicalSection);
     } else {
       state.currentBiblicalIndex += 1;
@@ -706,7 +691,6 @@ function showNextQuote() {
   }
 }
 
-// Show previous quote (history-based)
 function showPreviousQuote() {
   if (state.isBibleMode) {
     if (state.currentBiblicalIndex > 0) {
@@ -721,11 +705,9 @@ function showPreviousQuote() {
   }
 }
 
-// Set up event listeners
 function setupEventListeners() {
   console.log("🔗 Setting up event listeners...");
 
-  // Submit button
   if (elements.submitBtn) {
     elements.submitBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -734,7 +716,6 @@ function setupEventListeners() {
     });
   }
 
-  // Input field
   if (elements.userInput) {
     elements.userInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
@@ -745,7 +726,6 @@ function setupEventListeners() {
     });
   }
 
-  // Previous button
   if (elements.prevBtn) {
     elements.prevBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -754,7 +734,6 @@ function setupEventListeners() {
     });
   }
 
-  // Next button
   if (elements.nextBtn) {
     elements.nextBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -763,7 +742,6 @@ function setupEventListeners() {
     });
   }
 
-  // Action buttons
   if (elements.actionBtns) {
     elements.actionBtns.forEach((btn) => {
       btn.addEventListener("click", (e) => {
@@ -775,7 +753,6 @@ function setupEventListeners() {
     });
   }
 
-  // Theme toggle
   if (elements.themeToggle) {
     elements.themeToggle.addEventListener("click", (e) => {
       e.preventDefault();
@@ -784,7 +761,6 @@ function setupEventListeners() {
     });
   }
 
-  // Music toggle
   if (elements.musicToggle) {
     elements.musicToggle.addEventListener("click", (e) => {
       e.preventDefault();
@@ -793,7 +769,6 @@ function setupEventListeners() {
     });
   }
 
-  // Music prev/next
   if (elements.musicPrev) {
     elements.musicPrev.addEventListener("click", (e) => {
       e.preventDefault();
@@ -817,14 +792,12 @@ function setupEventListeners() {
     });
   }
 
-  // Double-click to copy quote
   if (elements.quoteCard) {
     elements.quoteCard.addEventListener("dblclick", () => {
       copyCurrentQuoteToClipboard();
     });
   }
 
-  // Keyboard shortcuts
   document.addEventListener("keydown", (e) => {
     if (document.activeElement === elements.userInput) return;
 
@@ -859,19 +832,16 @@ function setupEventListeners() {
         toggleMode();
         break;
       case "c":
-        // Quick copy
         e.preventDefault();
         copyCurrentQuoteToClipboard();
         break;
       case ">":
-        // Shift+.
         if (e.shiftKey) {
           e.preventDefault();
           playNextTrack();
         }
         break;
       case "<":
-        // Shift+,
         if (e.shiftKey) {
           e.preventDefault();
           if (!musicState.isInitialized) initializeMusicPlayer();
@@ -893,34 +863,26 @@ function setupEventListeners() {
   console.log("✅ Event listeners set up successfully");
 }
 
-// Initialize the application
 async function init() {
   console.log("🚀 Initializing QuoLand...");
 
   try {
-    // Initialize DOM elements
     initializeElements();
 
-    // Load quote data
     await loadQuoteData();
 
-    // Set up event listeners
     setupEventListeners();
 
-    // Initialize theme
     const savedTheme = localStorage.getItem("theme") || "dark";
     document.documentElement.setAttribute("data-theme", savedTheme);
 
-    // Set initial quote
     if (elements.quoteCard) {
       elements.quoteCard.classList.add("bible-mode");
     }
 
-    // Update stats and nav state
     updateStats();
     updateNavButtons();
     
-    // Initialize the mode button text and action buttons
     updateModeButtonText();
     updateActionButtons();
 
@@ -930,7 +892,6 @@ async function init() {
   }
 }
 
-// Make functions globally available
 window.showNextQuote = showNextQuote;
 window.showPreviousQuote = showPreviousQuote;
 window.handleActionClick = handleActionClick;
@@ -939,7 +900,6 @@ window.toggleTheme = toggleTheme;
 window.toggleMusic = toggleMusic;
 window.toggleMode = toggleMode;
 
-// Test function
 window.testButtons = function () {
   console.log("🧪 Testing button functionality...");
   console.log(
@@ -957,7 +917,6 @@ window.testButtons = function () {
   );
 };
 
-// Initialize when DOM is ready
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);
 } else {

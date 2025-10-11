@@ -40,11 +40,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background: var(--bg-gradient);
   min-height: 100vh;
   color: var(--text-color);
@@ -120,7 +121,7 @@ body {
 }
 
 .music-wrap.playing {
-  width: 138px; /* 42 + 2 + 50 + 2 + 42 */
+  width: 138px; 
 }
 
 .music-nav {
@@ -138,7 +139,6 @@ body {
   opacity: 0;
   pointer-events: none;
 }
-
 
 .music-wrap.playing .music-nav {
   opacity: 1;
@@ -158,7 +158,6 @@ body {
   margin-left: 2px;
 }
 
-/* Remove the translateX since we're using flex-start alignment */
 .music-wrap.playing .music-toggle {
   transform: none;
 }
@@ -220,8 +219,13 @@ body {
 }
 
 @keyframes music-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
 }
 
 .theme-toggle {
@@ -311,11 +315,10 @@ body {
   display: block;
 }
 
-/* Light theme styling for both Biblical and Inspirational modes */
 [data-theme="light"] .quote-card.bible-mode,
 [data-theme="light"] .quote-card:not(.bible-mode) {
   background: var(--card-bg);
-  border: 2px solid #8B4513;
+  border: 2px solid #8b4513;
 }
 
 [data-theme="light"] .quote-card.bible-mode #quote-text {
@@ -328,7 +331,11 @@ body {
 
 [data-theme="dark"] .quote-card.bible-mode,
 [data-theme="dark"] .quote-card:not(.bible-mode) {
-  background: linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(210, 105, 30, 0.95) 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(139, 69, 19, 0.95) 0%,
+    rgba(210, 105, 30, 0.95) 100%
+  );
   border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
@@ -337,7 +344,7 @@ body {
 }
 
 .quote-card.bible-mode #quote-text {
-  color: #FFF8DC;
+  color: #fff8dc;
 }
 
 .quote-card.bible-mode #quote-author {
@@ -486,7 +493,9 @@ body {
   border: none !important;
 }
 
-.quote-card.bible-mode ~ .controls .action-btn[data-action="inspirational"]:hover {
+.quote-card.bible-mode
+  ~ .controls
+  .action-btn[data-action="inspirational"]:hover {
   background: var(--quote-color) !important;
   color: white !important;
   transform: translateY(-2px);
@@ -549,7 +558,6 @@ body {
   opacity: 0.8;
 }
 
-/* Footer */
 .footer {
   text-align: center;
   color: white;
@@ -571,12 +579,12 @@ body {
     grid-template-columns: 1fr;
     text-align: center;
   }
-  
+
   .header-content {
     grid-column: 1;
     margin-bottom: 20px;
   }
-  
+
   .header-controls {
     grid-column: 1;
     justify-content: center;
@@ -624,7 +632,7 @@ body {
   .header h1 {
     font-size: 1.8rem;
   }
-  
+
   .header h2 {
     font-size: 1.1rem;
   }
@@ -643,23 +651,23 @@ body {
     flex-wrap: wrap;
     justify-content: center;
   }
-  
+
   .music-toggle,
   .theme-toggle {
     width: 45px;
     height: 45px;
     font-size: 1rem;
   }
-  
+
   .music-wrap.playing {
-    width: 120px; /* Slightly smaller for very small screens */
+    width: 120px; 
   }
-  
+
   .action-btn {
     width: 180px;
     font-size: 0.85rem;
   }
-  
+
   .primary-btn {
     padding: 12px 20px;
     font-size: 0.9rem;
