@@ -1,98 +1,118 @@
 [
-    {
-      "text": "Then the LORD God formed a man from the dust of the ground and breathed into his nostrils the breath of life, and the man became a living being.",
-      "reference": "Genesis 2:7"
-    },
-    {
-      "text": "About Benjamin he said: 'Let the beloved of the LORD rest secure in him, for he shields him all day long, and the one the LORD loves rests between his shoulders.'",
-      "reference": "Deuteronomy 33:12"
-    },
-    {
-      "text": "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
-      "reference": "Joshua 1:9"
-    },
-    {
-      "text": "He wraps up the waters in his clouds, yet the clouds do not burst under their weight. He covers the face of the full moon, spreading his clouds over it.",
-      "reference": "Job 26:8-9"
-    },
-    {
-      "text": "And he said to the human race, 'The fear of the Lord —that is wisdom, and to shun evil is understanding.'",
-      "reference": "Job 28:28"
-    },
-    {
-      "text": "For God does speak —now one way, now another — though no one perceives it. In a dream, in a vision of the night, when deep sleep falls on people as they slumber in their beds, he may speak in their ears and terrify them with warnings, or he may whisper softly, so that they do not know it.",
-      "reference": "Job 33:14-15"
-    },
-    {
-      "text": "God is mighty, but despises no one; he is mighty, and firm in his purpose.",
-      "reference": "Job 36:5"
-    },
-    {
-      "text": "God's voice thunders in marvelous ways; he does great things beyond our understanding.",
-      "reference": "Job 37:5"
-    },
-    {
-      "text": "My ears had heard of you but now my eyes have seen you.",
-      "reference": "Job 42:5"
-    },
-    {
-      "text": "Indeed, if you call out for insight and cry aloud for understanding, and if you look for it as for silver and search for it as for hidden treasure, then you will understand the fear of the LORD and find the knowledge of God.",
-      "reference": "Proverbs 2:3-5"
-    },
-    {
-      "text": "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
-      "reference": "Proverbs 3:5-6"
-    },
-    {
-      "text": "The mocker seeks wisdom and finds none, but knowledge comes easily to the discerning.",
-      "reference": "Proverbs 14:6"
-    },
-    {
-      "text": "Wine is a mocker and beer a brawler; whoever is led astray by them is not wise.",
-      "reference": "Proverbs 20:1"
-    },
-    {
-      "text": "Whoever shuts their ears to the cry of the poor will also cry out and not be answered.",
-      "reference": "Proverbs 21:13"
-    },
-    {
-      "text": "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
-      "reference": "Isaiah 40:31"
-    },
-    {
-      "text": "Do you not know? Have you not heard? The LORD is the everlasting God, the Creator of the ends of the earth. He will not grow tired or weary, and his understanding no one can fathom.",
-      "reference": "Isaiah 40:28"
-    },
-    {
-      "text": "I will give you hidden treasures, riches stored in secret places, so that you may know that I am the LORD, the God of Israel, who summons you by name.",
-      "reference": "Isaiah 45:3"
-    },
-    {
-      "text": "Remember the former things, those of long ago; I am God, and there is no other; I am God, and there is none like me.",
-      "reference": "Isaiah 46:9"
-    },
-    {
-      "text": "You will go out in joy and be led forth in peace; the mountains and hills will burst into song before you, and all the trees of the field will clap their hands.",
-      "reference": "Isaiah 55:12"
-    },
-    {
-      "text": "'Before I formed you in the womb I knew you, before you were born I set you apart; I appointed you as a prophet to the nations.'",
-      "reference": "Jeremiah 1: 5"
-    },
-    {
-      "text": "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",
-      "reference": "Jeremiah 29:11"
-    },
-    {
-      "text": "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness.",
-      "reference": "Lamentations 3:22"
-    },
-    {
-      "text": "'Even now,'' declares the LORD, 'return to me with all your heart, with fasting and weeping and mourning.'",
-      "reference": "Joel 2:12"
-    },
-    {
-      "text": "This is what the LORD says to Israel: 'Seek me and live'",
-      "reference": "Amos 5:4"
-    }
-  ] 
+  {
+    "text": "Then the LORD God formed a man from the dust of the ground and breathed into his nostrils the breath of life, and the man became a living being.",
+    "reference": "Genesis 2:7"
+  },
+  {
+    "text": "About Benjamin he said: 'Let the beloved of the LORD rest secure in him, for he shields him all day long, and the one the LORD loves rests between his shoulders.'",
+    "reference": "Deuteronomy 33:12"
+  },
+  {
+    "text": "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
+    "reference": "Joshua 1:9"
+  },
+  {
+    "text": "This is an easy thing in the eyes of the LORD...",
+    "reference": "2 Kings 3:18"
+  },
+  {
+    "text": "He wraps up the waters in his clouds, yet the clouds do not burst under their weight. He covers the face of the full moon, spreading his clouds over it.",
+    "reference": "Job 26:8-9"
+  },
+  {
+    "text": "By his power he churned up the sea; by his wisdom he cut Rahab to pieces.",
+    "reference": "Job 26:12"
+  },
+  {
+    "text": "And he said to the human race, 'The fear of the Lord —that is wisdom, and to shun evil is understanding.'",
+    "reference": "Job 28:28"
+  },
+  {
+    "text": "For God does speak —now one way, now another — though no one perceives it. In a dream, in a vision of the night, when deep sleep falls on people as they slumber in their beds, he may speak in their ears and terrify them with warnings, or he may whisper softly, so that they do not know it.",
+    "reference": "Job 33:14-15"
+  },
+  {
+    "text": "God is mighty, but despises no one; he is mighty, and firm in his purpose.",
+    "reference": "Job 36:5"
+  },
+  {
+    "text": "God's voice thunders in marvelous ways; he does great things beyond our understanding.",
+    "reference": "Job 37:5"
+  },
+  {
+    "text": "My ears had heard of you but now my eyes have seen you.",
+    "reference": "Job 42:5"
+  },
+  {
+    "text": "The fear of the LORD is the beginning of knowledge, but fools despise wisdom and instruction. Listen, my son, to your father's instruction and do not forsake your mother's teaching.",
+    "reference": "Proverbs 1:7-8"
+  },
+  {
+    "text": "Indeed, if you call out for insight and cry aloud for understanding, and if you look for it as for silver and search for it as for hidden treasure, then you will understand the fear of the LORD and find the knowledge of God.",
+    "reference": "Proverbs 2:3-5"
+  },
+  {
+    "text": "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+    "reference": "Proverbs 3:5-6"
+  },
+  {
+    "text": "The mocker seeks wisdom and finds none, but knowledge comes easily to the discerning.",
+    "reference": "Proverbs 14:6"
+  },
+  {
+    "text": "Wine is a mocker and beer a brawler; whoever is led astray by them is not wise.",
+    "reference": "Proverbs 20:1"
+  },
+  {
+    "text": "Whoever shuts their ears to the cry of the poor will also cry out and not be answered.",
+    "reference": "Proverbs 21:13"
+  },
+  {
+    "text": "Evildoers do not understand what is right, but those who seek the LORD understand it fully.",
+    "reference": "Proverbs 28:5"
+  },
+  {
+    "text": "But those who hope in the Lord will renew their strength. They will soar on wings like eagles; they will run and not grow weary, they will walk and not be faint.",
+    "reference": "Isaiah 40:31"
+  },
+  {
+    "text": "Do you not know? Have you not heard? The LORD is the everlasting God, the Creator of the ends of the earth. He will not grow tired or weary, and his understanding no one can fathom.",
+    "reference": "Isaiah 40:28"
+  },
+  {
+    "text": "I will give you hidden treasures, riches stored in secret places, so that you may know that I am the LORD, the God of Israel, who summons you by name.",
+    "reference": "Isaiah 45:3"
+  },
+  {
+    "text": "Remember the former things, those of long ago; I am God, and there is no other; I am God, and there is none like me.",
+    "reference": "Isaiah 46:9"
+  },
+  {
+    "text": "You will go out in joy and be led forth in peace; the mountains and hills will burst into song before you, and all the trees of the field will clap their hands.",
+    "reference": "Isaiah 55:12"
+  },
+  {
+    "text": "'Before I formed you in the womb I knew you, before you were born I set you apart; I appointed you as a prophet to the nations.'",
+    "reference": "Jeremiah 1: 5"
+  },
+  {
+    "text": "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.",
+    "reference": "Jeremiah 29:11"
+  },
+  {
+    "text": "Because of the Lord's great love we are not consumed, for his compassions never fail. They are new every morning; great is your faithfulness.",
+    "reference": "Lamentations 3:22"
+  },
+  {
+    "text": "'Even now,'' declares the LORD, 'return to me with all your heart, with fasting and weeping and mourning.'",
+    "reference": "Joel 2:12"
+  },
+  {
+    "text": "This is what the LORD says to Israel: 'Seek me and live'",
+    "reference": "Amos 5:4"
+  },
+  {
+    "text": "Look at the nations and watch — and be utterly amazed. For I am going to do something in your days that you would not believe, even if you were told.",
+    "reference": "Habakkuk"
+  }
+]
