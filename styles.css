@@ -2,7 +2,7 @@
   --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --card-bg: rgba(255, 255, 255, 0.95);
   --card-border: rgba(255, 255, 255, 0.2);
-  --text-color: #2d3748;
+  --text-color:rgb(40, 46, 58);
   --quote-color: #667eea;
   --input-bg: rgba(255, 255, 255, 0.9);
   --button-bg: rgba(255, 255, 255, 0.9);
@@ -12,8 +12,8 @@
   --nav-bg: rgba(255, 255, 255, 0.8);
   --shadow: rgba(0, 0, 0, 0.1);
   --shadow-hover: rgba(0, 0, 0, 0.15);
-  --gold: #ffd700;
-  --heart: #ff6b6b;
+  --gold: #FFD700;
+  --heart: #000000;
   --transition: all 0.3s ease;
   --border-radius: 20px;
   --border-radius-sm: 25px;
@@ -49,8 +49,8 @@ body {
   background: var(--bg-gradient);
   min-height: 100vh;
   color: var(--text-color);
-  line-height: 1.6;
-  transition: background 0.3s ease;
+  line-height: 1.5;
+  transition: background 0.5s ease;
 }
 
 .container {
