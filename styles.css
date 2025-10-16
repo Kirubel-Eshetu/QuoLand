@@ -1,5 +1,5 @@
 :root {
-  --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --bg-gradient: linear-gradient(135deg,rgb(61, 97, 255) 0%,rgb(0, 70, 200) 100%);
   --card-bg: rgba(255, 255, 255, 0.95);
   --card-border: rgba(255, 255, 255, 0.2);
   --text-color:rgb(40, 46, 58);
@@ -21,7 +21,7 @@
 }
 
 [data-theme="dark"] {
-  --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  --bg-gradient: linear-gradient(135deg,rgb(37, 37, 65) 0%,rgb(43, 57, 95) 50%,rgb(0, 45, 100) 100%);
   --card-bg: rgba(30, 30, 50, 0.95);
   --card-border: rgba(255, 255, 255, 0.1);
   --text-color: #e2e8f0;
