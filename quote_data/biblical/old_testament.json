@@ -1,5 +1,9 @@
 [
   {
+    "text": "Then God said, 'Let us make mankind in our image, in our likeness, so that they may rule over the fish in the sea and the birds in the sky, over the livestock and all the wild animals, and over all the creatures that move along the ground.'",
+    "reference": "Genesis 1:26"
+  },
+  {
     "text": "Then the LORD God formed a man from the dust of the ground and breathed into his nostrils the breath of life, and the man became a living being.",
     "reference": "Genesis 2:7"
   },
@@ -48,8 +52,12 @@
     "reference": "Job 42:5"
   },
   {
-    "text": "The fear of the LORD is the beginning of knowledge, but fools despise wisdom and instruction. Listen, my son, to your father's instruction and do not forsake your mother's teaching.",
-    "reference": "Proverbs 1:7-8"
+    "text": "The fear of the LORD is the beginning of knowledge, but fools despise wisdom and instruction.",
+    "reference": "Proverbs 1:7"
+  },
+  {
+    "text": "Listen, my son, to your father's instruction and do not forsake your mother's teaching.",
+    "reference": "Proverbs 1:8"
   },
   {
     "text": "Indeed, if you call out for insight and cry aloud for understanding, and if you look for it as for silver and search for it as for hidden treasure, then you will understand the fear of the LORD and find the knowledge of God.",
@@ -58,6 +66,10 @@
   {
     "text": "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
     "reference": "Proverbs 3:5-6"
+  },
+  {
+    "text": "My son, pay attention to what I say; turn your ear to my words.",
+    "reference": "Proverbs 4:20"
   },
   {
     "text": "Above all else, guard your heart, for everything you do flows from it.",
@@ -176,7 +188,15 @@
     "reference": "Micah 6:8"
   },
   {
+    "text": "The LORD is good, a refuge in times of trouble. He cares for those who trust in him.",
+    "reference": "Nahum 1:7"
+  },
+  {
     "text": "Look at the nations and watch — and be utterly amazed. For I am going to do something in your days that you would not believe, even if you were told.",
     "reference": "Habakkuk 1:5"
+  },
+  {
+    "text": "'I will send my messenger, who will prepare the way before me. Then suddenly the Lord you are seeking will come to his temple; the messenger of the covenant, whom you desire, will come,' says the LORD Almighty.",
+    "reference": "Malachi 3:1"
   }
 ]
