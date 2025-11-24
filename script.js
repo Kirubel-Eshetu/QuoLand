@@ -93,7 +93,6 @@ function initializeMusicPlayer() {
   musicState.isInitialized = true;
   musicState.currentPlaylistKey = getCurrentPlaylistKey();
   musicState.currentTrackIndex = 0;
-  // Ensure CSS state sync
   if (elements.musicWrap) {
     elements.musicWrap.classList.toggle("playing", musicState.isPlaying);
   }
