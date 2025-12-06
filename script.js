@@ -70,7 +70,7 @@ const musicState = {
       "./music/inspirational/inspiration_music_10.m4a",
     ],
   },
-};
+}
 
 function getCurrentPlaylistKey() {
   return state.isBibleMode ? "biblical" : "inspirational";
@@ -86,7 +86,7 @@ function initializeMusicPlayer() {
 
   audio.addEventListener("ended", () => {
     playNextTrack();
-  });
+  })
 
   document.body.appendChild(audio);
   musicState.audioEl = audio;
