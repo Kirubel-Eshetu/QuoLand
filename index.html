@@ -1,0 +1,107 @@
+<!-- QuoLand here we go! -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Biblical Wisdom and Inspirational Quotes - Find spiritual guidance and daily inspiration" />
+    <title>QuoLand</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" href="./public/Bible.ico">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-cross" aria-hidden="true"></i> Biblical Wisdom</h1>
+                <h2>Find spiritual guidance and divine inspiration 🙏🏾</h2>
+            </div>
+            <div class="header-controls">
+                <div class="music-wrap" id="music-wrap">
+                    <button id="music-prev" class="music-nav prev" title="Previous track" aria-label="Previous track">
+                        <i class="fas fa-backward" aria-hidden="true"></i>
+                    </button>
+                    <button id="music-next" class="music-nav next" title="Next track">
+                        <i class="fas fa-forward" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <button id="theme-toggle" class="theme-toggle" title="Toggle dark mode" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon" aria-hidden="true"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <section id="quote-container" aria-label="Quote display">
+                <article class="quote-card">
+                    <div class="quote-icon">
+                        <i class="fas fa-quote-left" aria-hidden="true"></i>
+                    </div>
+                    <blockquote id="quote-text">
+                        👆🏾 Click "Old Testament" or type your request to start your journey of spiritual guidance 📖
+                    </blockquote>
+                    <cite id="quote-ref"><i class="fas fa-bible"></i> Your Daily Biblical Wisdom</cite>
+                </article>
+            </section>
+
+            <section class="controls" aria-label="Quote controls">
+                <div class="input-section">
+                    <input type="text" id="user-input" placeholder="Type 'teach me', 'lead me' or 'guide me'..." autocomplete="off" aria-label="Enter your request" />
+                    <button id="submit-btn" class="primary-btn" aria-label="Send request">
+                        <i class="fas fa-paper-plane" aria-hidden="true"></i> Enter
+                    </button>
+                </div>
+
+                <!-- Stopped understanding here -->
+
+                <div class="quick-actions" role="group" aria-label="Quick actions">
+                    <button class="action-btn" data-action="OldT" aria-label="Old Testament quotes">
+                        <i class="fas fa-scroll" aria-hidden="true"></i> Old Testament
+                    </button>
+                    <button class="action-btn" data-action="psalm" aria-label="Psalms quotes"><i class="fas fa-music"></i> Psalms</button>
+                    <button class="action-btn" data-action="newT" aria-label="New Testament quotes"><i class="fas fa-book-open" aria-hidden="true"></i> New Testament</button>
+                    <button class="action=btn" data-action="random" aria-label="Random quote"><i class="fas fa-dice" aria-hidden="true"></i> Random</button>
+                    <button class="action-btn" data-action="inspirational" aria-label="Switch to inspirational quotes">
+                        <i class="fas fa-fire" aria-hidden="true"></i> Inspirational Mode
+                    </button>
+                </div>
+
+                <nav class="naviagtion" aria-label="Quote navigation">
+                    <button id="prev-btn" class="nav-btn" disabled aria-label="Previous quote">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i> Previous
+                    </button>
+                    <button id="next-btn" class="nav-btn" aria-label="Next quote">
+                        Next <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </nav>
+            </section>
+
+            <section class="status" aria-label="Quote statistics">
+                <div class="stat-item">
+                    <span class="stat-number" id="quote-count">0</span>
+                    <span class="stat-label">Quotes Viewed</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="current-index">0</span>
+                    <span class="stat-label">Current Quote</span>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>
+                Made with <i class="fas fa-heart" aria-hidden="true"></i> by <span>Kirubel</span>
+            </p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
