@@ -1,0 +1,63 @@
+:root {
+  --bg-gradient: linear-gradient(
+    100deg,
+    rgba(249, 255, 200, 1) 0%,
+    rgba(251, 254, 157, 1) 100%
+  );
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-border: rgba(255, 255, 255, 0.2);
+  --text-color: rgba(30, 36, 48, 1);
+  --quote-color: #667eea;
+  --input-bg: rgba(255, 255, 255, 0.9);
+  --button-bg: rgba(255, 255, 255, 0.9);
+  --button-text: #667eea;
+  --button-border: rgba(255, 255, 255, 0.2);
+  --button-color: #667eea;
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --gold: #ffd700;
+  --heart: #000000;
+  --transition: all 0.5s ease;
+  --border-radius: 20px;
+  --border-radius-sm: 25px;
+  --border-radius-lg: 50px;
+}
+
+[data-theme="dark"] {
+  --bg-gradient: linear-gradient(
+    135deg,
+    rgb(37, 37, 65) 0%,
+    rgb(43, 57, 95) 50%,
+    rgb(0, 45, 100) 100%
+  );
+  --card-bg: rgba(30, 30, 50, 0.95);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --text-color: #e2e8f0;
+  --quote-color: #60a5fa;
+  --input-bg: rgba(30, 30, 50, 0.9);
+  --button-bg: rgba(30, 30, 50, 0.9);
+  --button-text: #60a5fa;
+  --button-border: rgba(255, 255, 255, 0.1);
+  --button-color: #60a5fa;
+  --nav-bg: rgba(30, 30, 50, 0.8);
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    color: var(--text-color);
+    line-height: 1.8;
+    transition: background 0.5s ease;
+}
