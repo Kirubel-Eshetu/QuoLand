@@ -105,3 +105,32 @@ body {
   grid-column: 3;
   justify-content: flex-end;
 }
+
+.music-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  width: 50px;
+  transition: var(--transition);
+}
+
+.music-wrap.playing {
+  width: 138px;
+}
+
+.music-nav {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  width: 42px;
+  height: 42px;
+  color: black;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+}
