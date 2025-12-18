@@ -2,7 +2,7 @@
   --bg-gradient: linear-gradient(
     100deg,
     rgba(249, 255, 200, 1) 0%,
-    rgba(251, 254, 157, 1) 100%
+    rgba(253, 255, 190, 1) 100%
   );
   --card-bg: rgba(255, 255, 255, 0.95);
   --card-border: rgba(255, 255, 255, 0.2);
@@ -69,4 +69,39 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-itmes: center;
+  margin-bottom: 40px;
+  color: black;
+  position: relative;
+}
+
+.header-content {
+  text-align: center;
+  grid-column: 2;
+}
+
+.header h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.header h1 i {
+  color: var(--gold);
+  margin-right: 15px;
+}
+
+.header-controls {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  position: relative;
+  grid-column: 3;
+  justify-content: flex-end;
 }
