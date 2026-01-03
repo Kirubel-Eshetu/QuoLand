@@ -262,7 +262,7 @@ body {
   gap: 25px;
 }
 
-.quote-container {
+#quote-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -328,7 +328,155 @@ body {
   border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
-// stopped at .quote-icon
+.quote-icon {
+  color: var(--gold);
+}
+
+.quote-card.bible-mode #quote-author {
+  color: var(--gold);
+}
+
+.quote-card.fade-out {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.quote-card.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quote-card.flipping {
+  transform: rotateY(180deg);
+}
+
+.quote-card.flipped {
+  tranform: rotateY(180deg);
+}
+
+.quote-card.bible-mode.fade-out {
+  opacity: 0;
+  transform: translateY(20px) rotateY(180deg);
+}
+
+.quote-card.bible-mode.fade-in {
+  opacity: 1;
+  transform: translate(0) rotateY(180deg);
+}
+
+.quote-card.copied {
+  box-shadow: 0 0 0 3px var(--gold), 0 20px 40px var(--shadow);
+  transform: translateY(-3px);
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.input-section {
+  display: flex;
+  gap: 20px;
+  width: 100px;
+  max-width: 600px;
+}
+
+#user-input {
+  flex: 1;
+  padding: 15px 20px;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  font-size: 1rem;
+  background: var(--input-bg);
+  background-filter: blur(10px);
+  box-shadow: 0 5px 15px var(--shadow);
+  transition: var(--transition);
+  color: var(--text-color);
+}
+
+#user-input:focus {
+  outline: none;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.primary-btn {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, #c8ff00 0%, #00ff33 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-lg);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 5px 15px rgba(0, 0, 0.2);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+.quick-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.action-btn {
+  padding: 12px 20px;
+  background: var(--button-bg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 3px 10px var(--shadow);
+  color: var(--button-text);
+}
+
+.action-btn:hover {
+  background: var(--quote-color);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0.2);
+}
+
+.action-btn i {
+  margin-right: 8px;
+}
+
+.action-btn[data-action="inspirational"] {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white !important;
+  border: 2px solid #667eea !important;
+}
+
+.action-btn[data-action="inspirational"]:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.quote-card.bible-mode ~ .controls .action-btn[data-action="inspirational"] {
+  background: var(--button-bg) !important;
+  color: var(--button-text) !important;
+  border: none !important;
+}
+
+//stopped at .quote-card.bible-mode ~ .controls
+
+
+
 
 
 
