@@ -17,7 +17,7 @@
   --shadow: rgba(0, 0, 0, 0.1);
   --shadow-hover: rgba(0, 0, 0, 0.15);
   --gold: #ffd700;
-  --heart: #000000;
+  --heart: #ff0000;
   --transition: all 0.5s ease;
   --border-radius: 20px;
   --border-radius-sm: 25px;
@@ -54,12 +54,12 @@
 }
 
 body {
-    font-family: "Inter", sans-serif;
-    background: var(--bg-gradient);
-    min-height: 100vh;
-    color: var(--text-color);
-    line-height: 1.8;
-    transition: background 0.5s ease;
+  font-family: "Inter", sans-serif;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+  color: var(--text-color);
+  line-height: 1.8;
+  transition: background 0.5s ease;
 }
 
 .container {
@@ -309,7 +309,8 @@ body {
   display: block;
 }
 
-[data-theme="light"] .quote-card.bible-mode, [data-theme="light"] .quote-card:not(.bible-mode) {
+[data-theme="light"] .quote-card.bible-mode,
+[data-theme="light"] .quote-card:not(.bible-mode) {
   background: var(--card-bg);
   border: 2px solid #8b4513;
 }
@@ -318,13 +319,18 @@ body {
   color: var(--text-color);
 }
 
-[data-theme="light"] .quote-card
-.bible-mode #quote-ref {
+[data-theme="light"] .quote-card .bible-mode #quote-ref {
   color: var(--quote-color);
 }
 
-[data-theme="dark"] .quote-card.bible-mode, [data-theme="dark"] .quote-card: not(.bible-mode) {
-  background: linear-gradient(135deg, rgba(139, 69, 19, 0.95) 0%, rgba(210, 105, 30, 0.95) 100%);
+[data-theme="dark"].quote-card.bible-mode, [data-theme="dark"] .quote-card: not(
+  .bible-mode
+) {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 69, 19, 0.95) 0%,
+    rgba(210, 105, 30, 0.95) 100%
+  );
   border: 2px solid rgba(255, 255, 255, 0.95);
 }
 
@@ -473,12 +479,176 @@ body {
   border: none !important;
 }
 
-//stopped at .quote-card.bible-mode ~ .controls
+.quote-card.bible-mode
+  ~ .controls.action-btn[data-action="inspirational"]:hover {
+  background: var(--quote-color) !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0.2);
+}
 
+.navigation {
+  padding: 12px 20px;
+  background: var(--nav-bg);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  color: var(--button-text);
+}
 
+.nav-btn:hover:not(:disabled) {
+  background: var(--quote-color);
+  color: white;
+  transform: translateY(-2px);
+}
 
+.nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
 
+.stat-item {
+  text-align: center;
+}
 
+.stat-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--gold);
+}
 
+[data-theme="dark"] .stat-number {
+  color: #fbbf24;
+}
 
+.stat-label {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  color: black;
+}
+
+.footer {
+  text-align: center;
+  color: black;
+  margin-top: 40px;
+  opacity: 0.8;
+}
+
+.footer i {
+  color: var(--heart);
+  margin: 0 5px;
+}
+
+.footer span {
+  font-weight: 900;
+}
+
+@media (max-width: 768px) {
+  .header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .header-content {
+    grid-column: 1;
+    margin-bottom: 20px;
+  }
+
+  .header-controls {
+    grid-column: 1;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .quote-card {
+    padding: 30px 20px;
+    margin: 0 10px;
+  }
+
+  #quote-text {
+    font-size: 1.4rem;
+  }
+
+  .input-section {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .quick-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .action-btn {
+    width: 200px;
+  }
+
+  .stats {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .header h2 {
+    font-size: 1.1rem;
+  }
+
+  .quote-card {
+    padding: 25px 15px;
+  }
+
+  #quote-text {
+    font-size: 1.2rem;
+    line-height: 1.3;
+  }
+
+  .header-controls {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .music-toggle, .theme-toggle {
+    width: 45px;
+    height: 45px;
+    font-size: 1rem;
+  }
+
+  .music-wrap.playing {
+    width: 120px;
+  }
+
+  .action-btn {
+    width: 180px;
+    font-size: 0.85rem;
+  }
+
+  .primary-btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+}
