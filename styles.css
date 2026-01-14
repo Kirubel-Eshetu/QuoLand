@@ -1,10 +1,10 @@
 :root {
   --bg-gradient: linear-gradient(
     100deg,
-    rgba(249, 255, 200, 1) 0%,
-    rgba(253, 255, 190, 1) 100%
+    rgb(255, 255, 235) 0%,
+    rgb(250, 255, 220) 100%
   );
-  --card-bg: rgba(241, 255, 160, 0.95);
+  --card-bg: rgba(235, 255, 130, 1);
   --card-border: rgba(255, 255, 255, 0.2);
   --text-color: rgba(30, 36, 48, 1);
   --quote-color: #667eea;
@@ -16,7 +16,7 @@
   --nav-bg: rgba(255, 255, 255, 0.8);
   --shadow: rgba(0, 0, 0, 0.1);
   --shadow-hover: rgba(0, 0, 0, 0.15);
-  --gold: #ffd700;
+  --gold: #ffd900;
   --heart: #ff0000;
   --transition: all 0.5s ease;
   --border-radius: 20px;
@@ -323,7 +323,7 @@ body {
   color: var(--quote-color);
 }
 
-[data-theme="dark"].quote-card.bible-mode, [data-theme="dark"] .quote-card: not(
+[data-theme="dark"].quote-card.bible-mode,[data-theme="dark"] .quote-card: not(
   .bible-mode
 ) {
   background: linear-gradient(
@@ -384,8 +384,9 @@ body {
 
 .input-section {
   display: flex;
+  justify-content: center;
   gap: 20px;
-  width: 100px;
+  width: 475px;
   max-width: 600px;
 }
 
@@ -497,6 +498,14 @@ body {
   cursor: pointer;
   transition: var(--transition);
   color: var(--button-text);
+}
+
+.nav-btn {
+  padding: 6.5px;
+  border: none;
+  background: none;
+  font-size: 15px;
+  border-radius: 6.5px;
 }
 
 .nav-btn:hover:not(:disabled) {
@@ -632,7 +641,8 @@ body {
     justify-content: center;
   }
 
-  .music-toggle, .theme-toggle {
+  .music-toggle,
+  .theme-toggle {
     width: 45px;
     height: 45px;
     font-size: 1rem;
