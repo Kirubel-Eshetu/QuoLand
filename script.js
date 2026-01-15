@@ -40,37 +40,37 @@ let elements = {};
 
 const musicState = {
   audioEl: null,
-  isInitialized: false,
+  isIntialized: false,
   isPlaying: false,
   currentPlaylistKey: "biblical",
   currentTrackIndex: 0,
   playlists: {
     biblical: [
-      "./music/biblical/Biblical_Song_1.mp3",
-      "./music/biblical/Biblical_Song_2.mp3",
-      "./music/biblical/Biblical_Song_3.mp3",
-      "./music/biblical/Biblical_Song_4.mp3",
-      "./music/biblical/Biblical_Song_5.mp3",
-      "./music/biblical/Biblical_Song_6.m4a",
-      "./music/biblical/Biblical_Song_7.mp3",
-      "./music/biblical/Biblical_Song_8.m4a",
-      "./music/biblical/Biblical_Song_9.m4a",
-      "./music/biblical/Biblical_Song_10.m4a",
+      "./music/biblical/biblical-song-1.mp3",
+      "./music/biblical/biblical-song-2.mp3",
+      "./music/biblical/biblical-song-3.mp3",
+      "./music/biblical/biblical-song-4.mp3",
+      "./music/biblical/biblical-song-5.mp3",
+      "./music/biblical/biblical-song-6.m4a",
+      "./music/biblical/biblical-song-7.mp3",
+      "./music/biblical/biblical-song-8.m4a",
+      "./music/biblical/biblical-song-9.m4a",
+      "./music/biblical/biblical-song-10.m4a",
     ],
-    inspirational: [
-      "./music/inspirational/inspiration_music_1.mp3",
-      "./music/inspirational/inspiration_music_2.m4a",
-      "./music/inspirational/inspiration_music_3.m4a",
-      "./music/inspirational/inspiration_music_4.m4a",
-      "./music/inspirational/inspiration_music_5.m4a",
-      "./music/inspirational/inspiration_music_6.m4a",
-      "./music/inspirational/inspiration_music_7.m4a",
-      "./music/inspirational/inspiration_music_8.m4a",
-      "./music/inspirational/inspiration_music_9.m4a",
-      "./music/inspirational/inspiration_music_10.m4a",
+    insiprational: [
+        "./music/inspirational/inspirational-music-1.mp3",
+        "./music/inspirational/inspirational-music-2.m4a",
+        "./music/inspirational/inspirational-music-3.m4a",
+        "./music/inspirational/inspirational-music-4.m4a",
+        "./music/inspirational/inspirational-music-5.m4a",
+        "./music/inspirational/inspirational-music-6.m4a",
+        "./music/inspirational/inspirational-music-7.m4a",
+        "./music/inspirational/inspirational-music-8.m4a",
+        "./music/inspirational/inspirational-music-9.m4a",
+        "./music/inspirational/inspirational-music-10.m4a"
     ],
   },
-}
+};
 
 function getCurrentPlaylistKey() {
   return state.isBibleMode ? "biblical" : "inspirational";
