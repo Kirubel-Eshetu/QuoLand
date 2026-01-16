@@ -115,9 +115,8 @@ function loadCurrentTrack() {
   return true;
 }
 
-// understand from here
 function playCurrentTrack() {
-  if (!loadCurrentTrack()) return; // What does this line mean?
+  if (!loadCurrentTrack()) return; 
   musicState.audioEl
     .play()
     .then(() => {
@@ -149,8 +148,6 @@ function pauseMusic() {
     elements.musicWrap.classList.remove("playing");
   }
 }
-
-//understand from here
 
 function playNextTrack() {
   const key = musicState.currentPlaylistKey;
@@ -201,11 +198,57 @@ function initializeElements() {
     quoteCount: document.getElementById("quote-count"),
     currentIndex: document.getElementById("current-index"),
     quoteCard: document.querySelector(".quote-card"),
-    actionsBtns: document.querySelectorAll(".action-btn"),
+    actionBtn: document.querySelectorAll(".action-btn"),
     themeToggle: document.getElementById("theme-toggle"),
     musicToggle: document.getElementById("music-toggle"),
     musicPrev: document.getElementById("music-prev"),
     musicNext: document.getElementById("music-next"),
     musicWrap: document.getElementById("music-wrap"),
   };
+}
+
+async function loadQuoteData() {
+  try {
+    const [oldTestament, newTestament, pslams] = await Promise.all([
+      fetch("./quote-data/biblical/old-testament.json").then((r) => r.json()),
+      fetch("./quote-data/biblical/new-testament.json").then((r) => r.json),
+      fetch("./quote-data/biblical/pslams.json").then((r) => r.json()),
+    ]);
+
+    const normalizeBiblical = (arr) =>
+    (arr || [])
+      .filter((q) => q && typeof q.text === "string")
+      .map((q) => ({
+        text: String(q.text).trim(),
+        reference: String(q.reference || "").trim(),
+      }));
+
+      quoteData.biblical.oldTestament = normalizeBiblical(oldTestament);
+      quoteData.biblical.newTestament = normalizeBiblical(newTestament);
+      quoteData.biblical.pslams = normalizeBiblical(psalms);
+
+      const [inspirational, strengthening, focus] = await Promise.all([
+        fetch("./quote-data/inspirational/inspirational-quotes.json").then((r) => r.json()),
+        fetch("./quote-data/inspirational/strenghtening-quotes.json").then((r)=>r.json),
+        fetch("./quote-data/inspirational/strenghtening-quotes.json").then((r)=>r.json),
+      ]);
+
+      const normalizeInspirational = (arr) =>
+      (arr || [])
+        .filter((q) => q && typeof q.text === "string")
+        .map((q) => ({
+          text: String(q.text).trim(),
+          author: String(q.author || q.reference || "Unknow").trim() || "Unknown",
+        }));
+
+        quoteData.inspirational.inspirational = normalizeInspirational(inspirational);
+        quoteData.inspirational.strengthening = normalizeInspirational(strengthening);
+        quoteData.inspirational.focus = normalizeInspirational(focus);
+  } catch {
+    console.error("❌ Error loading quote data:", error);
+  }
+}
+
+function displayQuote(quote, reference) {
+  
 }
