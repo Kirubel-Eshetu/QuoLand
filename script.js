@@ -205,9 +205,9 @@ function initializeElements() {
 async function loadQuoteData() {
   try {
     const [oldTestament, newTestament, psalms] = await Promise.all([
-      fetch("./quote_data/biblical/old_testament.json").then((r) => r.json()),
-      fetch("./quote_data/biblical/new_testament.json").then((r) => r.json()),
-      fetch("./quote_data/biblical/psalms.json").then((r) => r.json()),
+      fetch("./quote-data/biblical/old-testament.json").then((r) => r.json()),
+      fetch("./quote-data/biblical/new-testament.json").then((r) => r.json()),
+      fetch("./quote-data/biblical/psalms.json").then((r) => r.json()),
     ]);
 
     // Normalize biblical quotes
@@ -224,13 +224,13 @@ async function loadQuoteData() {
     quoteData.biblical.psalms = normalizeBiblical(psalms);
 
     const [inspirational, strengthening, focus] = await Promise.all([
-      fetch("./quote_data/inspirational/inspirational_quotes.json").then((r) =>
+      fetch("./quote-data/inspirational/inspirational-quotes.json").then((r) =>
         r.json()
       ),
-      fetch("./quote_data/inspirational/strengthening_quotes.json").then((r) =>
+      fetch("./quote-data/inspirational/strengthening-quotes.json").then((r) =>
         r.json()
       ),
-      fetch("./quote_data/inspirational/focus_quotes.json").then((r) =>
+      fetch("./quote_data/inspirational/focus-quotes.json").then((r) =>
         r.json()
       ),
     ]);
