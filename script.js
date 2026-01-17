@@ -207,6 +207,7 @@ function initializeElements() {
   };
 }
 
+//understanding stopped here!
 async function loadQuoteData() {
   try {
     const [oldTestament, newTestament, pslams] = await Promise.all([
@@ -250,5 +251,70 @@ async function loadQuoteData() {
 }
 
 function displayQuote(quote, reference) {
-  
+  if (elements.quoteText && elements.quoteRef) {
+    elements.quoteText.textContent = quote;
+    elements.quoteRef.textContent = reference;
+
+    if (elements.quoteCard) {
+      elements.quoteCard.classList.add("fade-out");
+      setTimeout (() => {
+        elements.quoteCard.classList.remove("fade-out");
+        elements.quoteCard.classList.add("fade-in");
+        setTimeout (() => {
+          elements.quoteCard.classList.remove("fade-in");
+        }, 300);
+      }, 150);
+    }
+  }
+}
+
+function copyCurrentQuoteToClipboard() {
+  const textEl = elements.quoteText;
+  const refEl = elements.quoteRef;
+  if (!textEl || !refEl) return;
+
+  const payload = `${textEl.textContent} ${refEl.textContent}`.trim();
+  const showCopied = () => {
+    if (!elements.quoteCard) return;
+    elements.quoteCard.classList.add("copied");
+      setTimeout(() => elements.quoteCard && elements.quoteCard.classList.remove("copied"), 1200);
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard
+      .writeText(payload)
+      .then(showCopied)
+      .catch(() => {
+        
+        const ta = document.createElement("textarea");
+        ta.value = payload;
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          document.execCommand("copy");
+          showCopied();
+        } catch (e) {
+          console.warn("Clipboard copy failed", e);
+        } finally {
+          document.body.removeChild(ta);
+        }
+      });
+  } else {
+    const ta = document.createElement("textarea");
+    ta.value = payload;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand("copy");
+      showCopied;
+    } catch (e) {
+      console.warn("Clipboard copy failed", e);
+    } finally {
+      document.body.removeChild(ta);
+    }
+  }
 }
