@@ -137,7 +137,7 @@ body {
 
 .music-wrap.playing .music-nav {
   opacity: 1;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .music-nav:hover {
@@ -154,7 +154,7 @@ body {
 }
 
 .music-wrap.playing .music-toggle {
-  tranform: none;
+  transform: none;
 }
 
 .music-wrap:not(.playing) .music-nav.prev,
