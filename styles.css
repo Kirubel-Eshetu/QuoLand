@@ -1,12 +1,8 @@
 :root {
-  --bg-gradient: linear-gradient(
-    100deg,
-    rgb(255, 255, 235) 0%,
-    rgb(250, 255, 220) 100%
-  );
-  --card-bg: rgba(235, 255, 130, 1);
+  --bg-gradient: linear-gradient(135deg, rgb(0, 40, 215) 0%, rgb(140, 180, 255) 100%);
+  --card-bg: rgba(255, 255, 255, 0.95);
   --card-border: rgba(255, 255, 255, 0.2);
-  --text-color: rgba(30, 36, 48, 1);
+  --text-color: rgb(40, 46, 58);
   --quote-color: #667eea;
   --input-bg: rgba(255, 255, 255, 0.9);
   --button-bg: rgba(255, 255, 255, 0.9);
@@ -31,7 +27,7 @@
     rgb(43, 57, 95) 50%,
     rgb(0, 45, 100) 100%
   );
-  --card-bg: rgba(30, 30, 50, 0.95);
+  --card-bg: linear-gradient(135deg, #001122 0%, #5429a2 100%);
   --card-border: rgba(255, 255, 255, 0.1);
   --text-color: #e2e8f0;
   --quote-color: #60a5fa;
@@ -76,7 +72,7 @@ body {
   grid-template-columns: 1fr auto 1fr;
   align-itmes: center;
   margin-bottom: 40px;
-  color: black;
+  color: white;
   position: relative;
 }
 
@@ -489,6 +485,11 @@ body {
 }
 
 .navigation {
+  display: flex;
+  gap: 15px;
+}
+
+.nav-btn {
   padding: 12px 20px;
   background: var(--nav-bg);
   border: none;
@@ -498,14 +499,6 @@ body {
   cursor: pointer;
   transition: var(--transition);
   color: var(--button-text);
-}
-
-.nav-btn {
-  padding: 6.5px;
-  border: none;
-  background: none;
-  font-size: 15px;
-  border-radius: 6.5px;
 }
 
 .nav-btn:hover:not(:disabled) {
@@ -544,12 +537,12 @@ body {
 .stat-label {
   font-size: 0.9rem;
   opacity: 0.8;
-  color: black;
+  color: white;
 }
 
 .footer {
   text-align: center;
-  color: black;
+  color: white;
   margin-top: 40px;
   opacity: 0.8;
 }
