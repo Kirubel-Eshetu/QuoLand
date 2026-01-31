@@ -244,7 +244,7 @@ body {
 }
 
 [data-theme="dark"] .theme-toggle {
-  background: rgba(255, 255, 255, 0.1);
+  background:  rgba(255, 255, 255, 0.8);
 }
 
 [data-theme="dark"] .theme-toggle:hover {
@@ -352,18 +352,14 @@ body {
   transform: rotateY(180deg);
 }
 
-.quote-card.flipped {
-  tranform: rotateY(180deg);
-}
-
 .quote-card.bible-mode.fade-out {
   opacity: 0;
-  transform: translateY(20px) rotateY(180deg);
+  transform: translateY(15px) rotateY(20deg);
 }
 
 .quote-card.bible-mode.fade-in {
   opacity: 1;
-  transform: translate(0) rotateY(180deg);
+  transform: translate(15px) rotateY(20deg);
 }
 
 .quote-card.copied {
