@@ -1,5 +1,9 @@
 [
   {
+    "text": "In the beginning God created the heavens and the earth.",
+    "reference": "Genesis 1:1"
+  },
+  {
     "text": "Then God said, 'Let us make mankind in our image, in our likeness, so that they may rule over the fish in the sea and the birds in the sky, over the livestock and all the wild animals, and over all the creatures that move along the ground.'",
     "reference": "Genesis 1:26"
   },
@@ -18,6 +22,10 @@
   {
     "text": "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.",
     "reference": "Joshua 1:9"
+  },
+  {
+    "text": "Then Hannah prayed and said: 'My heart rejoices in the LORD; in the LORD my horn is lifted high. My mouth boasts over my enemies, for I delight in your deliverance.",
+    "reference": "1 Samuel 2:1"
   },
   {
     "text": "This is an easy thing in the eyes of the LORD...",
