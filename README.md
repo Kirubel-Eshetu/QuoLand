@@ -1,7 +1,7 @@
 # Biblical Wisdom & Inspirational Quotes Web Application
 
-📖 A beautiful, interactive web application that provides both biblical wisdom and inspirational quotes with an intuitive user interface. 
-👉🏾 Features a dual-mode system allowing users to switch between spiritual guidance and inspirational content.
+📖 A beautiful, interactive web application that provides both biblical wisdom and inspirational quotes with an intuitive user interface. <br />
+👉🏾 Features a dual-mode system allowing users to switch between spiritual guidance and inspirational content. <br />
 🎵 Enjoy reading bible verses and inspirational quotes while listening to background music selected for both modes. 
 
 ### ⌨️ **Keyboard Shortcuts**
@@ -21,6 +21,6 @@
 - **Natural Language Processing**: Understand user intent from text input.
 - **Accessibility**: Full ARIA support and keyboard navigation.
 
-- **Down below you may find the landing page of quoland linked to the website** 
+**Down below you may find the landing page of quoland linked to the website** 
 
 <a href = "https://quoland.netlify.app/"><img src = "https://github.com/Kirubel-Eshetu/QuoLand/blob/main/quoland-landing-page.png" alt = "Landing page of quoland"></a>
