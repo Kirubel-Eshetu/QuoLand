@@ -23,4 +23,4 @@
 
 - **Down below you may find the landing page of quoland linked to the website** 
 
-<a href = "https://quoland.netlify.app/"><img src = "https://github.com/Kirubel-Eshetu/quoland" alt = "Landing page of quoland"></a>
+<a href = "https://quoland.netlify.app/"><img src = "https://github.com/Kirubel-Eshetu/QuoLand/blob/main/quoland-landing-page.png" alt = "Landing page of quoland"></a>
