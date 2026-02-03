@@ -20,3 +20,7 @@
 - **Statistics Tracking**: View count and current position.
 - **Natural Language Processing**: Understand user intent from text input.
 - **Accessibility**: Full ARIA support and keyboard navigation.
+
+- **Down below you may find the landing page of quoland linked to the website** 
+
+<a href = "https://quoland.netlify.app/"><img src = "https://github.com/Kirubel-Eshetu/quoland" alt = "Landing page of quoland"></a>
