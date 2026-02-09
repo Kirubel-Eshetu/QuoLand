@@ -493,6 +493,21 @@ function toggleTheme() {
   }
 }
 
+function updateHeaderContent() {
+  const headerContent = document.querySelector(".header-content");
+
+  if (state.isBibleMode) {
+    headerContent.innerHTML = 
+    '<h1><i class="fas fa-cross" aria-hidden="true"></i> Biblical Wisdom<h1>' +
+    '<h2>Find spiritual guidance and divine inspiration 🙏🏾</h2>'
+  }
+  else {
+    headerContent.innerHTML = 
+    '<h1><i class = "fas fa-fire" aria-hidden= "true"></i> Inspirational Quotes</h1>' +
+    '<h2>Get your daily inspiration and fly high 😎</h2>';
+  }
+}
+
 function updateModeButtonText() {
   const inspirationalBtn = document.querySelector(
     '[data-action = "inspirational"]',
@@ -575,6 +590,7 @@ function updateActionButtons() {
 function toggleMode() {
   state.isBibleMode = !state.isBibleMode;
 
+  updateHeaderContent();
   updateModeButtonText();
   updateActionButtons();
 
