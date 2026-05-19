@@ -1,5 +1,3 @@
-console.log("QuoLand has started!");
-
 const state = {
   currentBiblicalIndex: 0,
   currentQuoteIndex: 0,
