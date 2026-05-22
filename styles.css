@@ -403,7 +403,7 @@ body {
 
 .primary-btn {
   padding: 15px 25px;
-  background: linear-gradient(135deg, #c8ff00 0%, #00ff33 100%);
+  background: linear-gradient(135deg, #88ab55 0%, #11921d 100%);
   color: white;
   border: none;
   border-radius: var(--border-radius-lg);

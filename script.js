@@ -746,7 +746,6 @@ function setupEventListeners() {
     elements.userInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") {
         e.preventDefault();
-        console.log("Enter key pressed");
         handleUserInput();
       }
     });
@@ -755,7 +754,6 @@ function setupEventListeners() {
   if (elements.prevBtn) {
     elements.prevBtn.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("Previous button clicked");
       showPreviousQuote();
     });
   }
@@ -923,23 +921,6 @@ window.handleUserInput = handleUserInput;
 window.toggleTheme = toggleTheme;
 window.toggleMusic = toggleMusic;
 window.toggleMode = toggleMode;
-
-window.testButtons = function () {
-  console.log("Testing button functionality...");
-  console.log(
-    "Elements found:",
-    Object.keys(elements).filter((key) => elements[key]),
-  );
-  console.log(
-    "Quote data loaded:",
-    Object.keys(quoteData.biblical).length +
-      Object.keys(quoteData.inspirational).length,
-  );
-  console.log(
-    "Current mode:",
-    state.isBibleMode ? "Biblical" : "Inspirational",
-  );
-};
 
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", init);
